@@ -1,0 +1,19 @@
+templateConfig:
+
+  # REST-ful Controller
+  - template: java/layui_controller.vm
+    destDir: src/main/java
+    destPackage: ${basePackage}.controller
+    destFileName: ${entityName}Controller.java
+
+  # Interface VO
+  - template: java/layui_controller_vo.vm
+    destDir: src/main/java
+    destPackage: ${basePackage}.intf.vo
+    destFileName: ${entityName}VO.java
+
+  # Service
+  - template: java/layui_service.vm
+    destDir: src/main/java
+    destPackage: ${basePackage}.service
+    destFileName: ${entityName}Service.java

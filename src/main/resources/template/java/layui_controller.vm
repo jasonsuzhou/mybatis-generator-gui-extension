@@ -1,0 +1,93 @@
+package ${table.basePackage}.controller;
+
+import ${table.basePackage}.common.APIResponse;
+import ${table.basePackage}.common.CommonResponse;
+import ${table.basePackage}.entity.${table.entityObjName};
+import ${table.basePackage}.infrastructure.util.WebUtils;
+import ${table.basePackage}.intf.exception.RestfulRequestException;
+import ${table.basePackage}.intf.interceptor.AdminLimit;
+import ${table.basePackage}.intf.vo.${table.entityName}VO;
+import ${table.basePackage}.service.${table.entityName}Service;
+import ${table.basePackage}.service.exception.ServiceException;
+import liquibase.util.csv.CSVWriter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+
+
+@ApiIgnore
+@RestController
+@RequestMapping("api/${table.entityLowerCamel}")
+public class ${table.entityName}Controller{
+    @Autowired
+    ${table.entityName}Service ${table.entityLowerCamel}Service;
+
+    @AdminLimit
+    @PostMapping("findByPage")
+    public CommonResponse<${table.entityName}> findByPage(${table.entityName} ${table.entityLowerCamel},
+                                @RequestParam("page") int pageIndex,
+                                @RequestParam("limit") int perPage) {
+        return ${table.entityLowerCamel}Service.findByPage(${table.entityLowerCamel},pageIndex,perPage);
+    }
+
+    @AdminLimit
+    @GetMapping("queryById/{id}")
+    public APIResponse queryById(@PathVariable("id") Long id) {
+        return  ${table.entityLowerCamel}Service.queryById(id);
+    }
+
+    @AdminLimit
+    @GetMapping("deleteById/{id}")
+    public APIResponse deleteById(@PathVariable("id") Long id) {
+        return ${table.entityLowerCamel}Service.deleteById(id);
+    }
+
+    @AdminLimit
+    @PostMapping("update")
+    public APIResponse update(@RequestBody ${table.entityName} ${table.entityLowerCamel}) {
+        return ${table.entityLowerCamel}Service.update(${table.entityLowerCamel});
+    }
+
+    @AdminLimit
+    @PostMapping("add")
+    public APIResponse add(/*form data*/${table.entityName} ${table.entityLowerCamel}) {
+        return ${table.entityLowerCamel}Service.add(${table.entityLowerCamel});
+    }
+
+    @AdminLimit
+    @PostMapping("export")
+    public void export(/*form data*/${table.entityName} ${table.entityLowerCamel},
+                        HttpServletRequest request, HttpServletResponse response) {
+        try {
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("");
+            String tempFileName = ${table.entityName}.class.getSimpleName()+"_"+System.currentTimeMillis()/1000+".csv";
+            String fileName = WebUtils.genDownloadFileName(tempFileName, request);
+            response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
+            List<${table.entityName}> list = ${table.entityLowerCamel}Service.queryAll(${table.entityLowerCamel});
+            CSVWriter csvWriter = new CSVWriter(response.getWriter());
+            ${table.entityName}VO ${table.entityLowerCamel}VO = null;
+            for (${table.entityName} record : list) {
+                ${table.entityLowerCamel}VO = new ${table.entityName}VO(record);
+                csvWriter.writeNext(${table.entityLowerCamel}VO.genExportArray());
+            }
+            csvWriter.flush();
+            csvWriter.close();
+        } catch (IOException e) {
+            throw new RestfulRequestException(ServiceException.CODE.IO_ERROR, e.getMessage());
+        } catch (ServiceException e) {
+            throw new RestfulRequestException(e.getCode(), e.getMessage());
+        }
+    }
