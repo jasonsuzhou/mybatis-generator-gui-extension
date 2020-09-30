@@ -19,7 +19,11 @@ public class ${table.entityName}VO {
     public String[] genExportArray() {
         return new String[]{
             #foreach($column in $table.columns)
-            ${column.fieldName},
+                #if (${column.fieldName} == "id")
+                    ${column.fieldName}
+                #else
+                    ,${column.fieldName}
+                #end
             #end
             };
     }

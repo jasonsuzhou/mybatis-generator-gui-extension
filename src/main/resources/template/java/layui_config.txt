@@ -17,3 +17,21 @@ templateConfig:
     destDir: src/main/java
     destPackage: ${basePackage}.service
     destFileName: ${entityName}Service.java
+
+  # List Html Page
+  - template: html/layui_list.vm
+    destDir: src/main/resources
+    destPackage: static.html.admin.${entityLowerCamel}
+    destFileName: ${entityLowerCamel}List.html
+
+  # Add Html Page
+  - template: html/layui_add.vm
+    destDir: src/main/resources
+    destPackage: static.html.admin.${entityLowerCamel}
+    destFileName: ${entityLowerCamel}Add.html
+
+  # Edit Html Page
+  - template: html/layui_edit.vm
+    destDir: src/main/resources
+    destPackage: static.html.admin.${entityLowerCamel}
+    destFileName: ${entityLowerCamel}Edit.html
