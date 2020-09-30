@@ -20,9 +20,9 @@ public class ${table.entityName}VO {
         return new String[]{
             #foreach($column in $table.columns)
                 #if (${column.fieldName} == "id")
-                    ${column.fieldName}
+                    String.valueOf(${column.fieldName})
                 #else
-                    ,${column.fieldName}
+                    ,String.valueOf(${column.fieldName})
                 #end
             #end
             };
@@ -33,13 +33,13 @@ public class ${table.entityName}VO {
     }
 
 #foreach($column in $table.columns)
-    private $column.fieldType ${column.getterName}(){
+    public $column.fieldType ${column.getterName}(){
         return this.${column.fieldName};
     }
 #end
 
 #foreach($column in $table.columns)
-    private void ${column.setterName}($column.fieldType ${column.fieldName}){
+    public void ${column.setterName}($column.fieldType ${column.fieldName}){
         this.${column.fieldName} = ${column.fieldName};
     }
 #end

@@ -91,3 +91,4 @@ public class ${table.entityName}Controller{
             throw new RestfulRequestException(e.getCode(), e.getMessage());
         }
     }
+}

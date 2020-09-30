@@ -13,7 +13,6 @@
     <legend>添加${table.entityLowerCamel}</legend>
 </fieldset>
 <form class="layui-form" method="post" lay-filter="${table.entityLowerCamel}Add-filter">
-    <input type="hidden" id="section" name="section">
     #foreach($column in $table.columns)
         #if (${column.fieldName} == "id")
 
@@ -21,7 +20,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">${column.fieldName}</label>
             <div class="layui-input-block">
-                <input type="text" lay-verify="required" name="section" autocomplete="off" class="layui-input">
+                <input type="text" lay-verify="required" name="${column.fieldName}" autocomplete="off" class="layui-input">
             </div>
         </div>
         #end

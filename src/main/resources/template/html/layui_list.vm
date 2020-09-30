@@ -47,7 +47,6 @@
                     <button class="layui-btn layui-btn-sm" id="btnRefresh" lay-event="refresh"><i class="layui-icon layui-icon-refresh-3"></i>刷新</button>
                     <button class="layui-btn layui-btn-normal layui-btn-sm" id="btnAdd" lay-event="add"><i class="layui-icon layui-icon-add-1"></i>添加</button>
                     <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="deleteBatch"><i class="layui-icon layui-icon-delete"></i>批量删除</button>
-                    <button class="layui-btn layui-btn-sm" lay-event="pushToRedis"><i class="layui-icon layui-icon-upload-circle"></i>同步到Redis</button>
                 </div>
             </script>
             <table class="layui-hide" id="${table.entityLowerCamel}-table" lay-filter="${table.entityLowerCamel}-table"></table>
@@ -143,7 +142,7 @@
                         layer.confirm('真的批量删除行么', function(index){
                             for (var i=0;i<data.length;i++) {
                                 var obj = data[i];
-                                var id = obj.section;
+                                var id = obj.id;
                                 doDel(id, table);
                             }
                             //layer.close(index);
@@ -159,7 +158,7 @@
                     layer.alert(JSON.stringify(obj.data));
                     break;
                 case 'edit':
-                    var id = obj.data.section;
+                    var id = obj.data.id;
                     layer.open({
                         type: 2,
                         title: '编辑',
@@ -170,7 +169,7 @@
                     break;
                 case 'del':
                     layer.confirm('真的删除行么', function(index){
-                        var id = obj.data.section;
+                        var id = obj.data.id;
                         doDel(id, table);
                         //layer.close(index);
                     });
