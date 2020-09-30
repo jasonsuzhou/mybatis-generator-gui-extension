@@ -1,5 +1,7 @@
 # mybatis-generator-gui-extension
 
+### Fork后的修改历史：
+- 我新增了自动生成MVC代码的java模板和layui后台管理的增删改查页面，打开工具中的MVC代码生成tab启用插件并拷贝src\main\resources\template\java\layui_config.txt中的配置
 
 <!-- Badges section here. -->
 [![Crates.io](https://img.shields.io/crates/l/rustc-serialize.svg)](https://github.com/spawpaw/mybatis-generator-gui-extension/blob/master/LICENSE)
