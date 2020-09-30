@@ -209,6 +209,8 @@ public class DatabaseConfig implements Serializable {
                 TableColumnMetaData columnMetaData = new TableColumnMetaData();
                 columnMetaData.setColumnName(rs.getString("COLUMN_NAME"));
                 columnMetaData.setJdbcType(rs.getString("TYPE_NAME"));
+                // add by jason
+                columnMetaData.setRemarks(rs.getString("REMARKS"));
                 tableConfigs.get(tableName).add(columnMetaData);
             }
 

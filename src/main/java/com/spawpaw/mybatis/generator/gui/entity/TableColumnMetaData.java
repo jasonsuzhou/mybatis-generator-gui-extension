@@ -27,6 +27,21 @@ public class TableColumnMetaData {
 
     private StringProperty typeHandler = new SimpleStringProperty();
 
+    // add by jason
+    private StringProperty remarks = new SimpleStringProperty();
+
+    public String getRemarks() {
+        return remarks.get();
+    }
+
+    public StringProperty remarksProperty() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks.set(remarks);
+    }
+
     public String getColumnName() {
         return columnName.get();
     }

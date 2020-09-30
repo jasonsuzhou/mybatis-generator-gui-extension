@@ -1,6 +1,7 @@
 package com.spawpaw.mybatis.generator.gui.entity;
 
 import com.spawpaw.mybatis.generator.gui.util.Utils;
+import org.apache.commons.lang.StringUtils;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.config.Context;
@@ -26,6 +27,9 @@ public class Table extends ConfigMatcher {
     public final String mapperPackage;
     public final String mapperName;
     public final String mapperLowerCamel;
+    // add by json start
+    public final String remarks;
+    // add by json end
     public List<Column> columns = new ArrayList<>();
     Logger log = LoggerFactory.getLogger(Table.class);
 
@@ -46,6 +50,8 @@ public class Table extends ConfigMatcher {
         mapperPackage = introspectedTable.getFullyQualifiedTable().getDomainObjectSubPackage();
         mapperName = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
         mapperLowerCamel = Utils.getLowerCamelCase(mapperName);
+
+        remarks = introspectedTable.getRemarks();
 
         put("ddl", context.getProperty("ddls." + actualName));
         for (IntrospectedColumn introspectedColumn : introspectedTable.getAllColumns()) {
@@ -93,6 +99,13 @@ public class Table extends ConfigMatcher {
 
     public String getMapperLowerCamel() {
         return mapperLowerCamel;
+    }
+
+    public String getRemarks() {
+        if (StringUtils.isBlank(remarks)) {
+            return exampleLowerCamel;
+        }
+        return remarks;
     }
 
     public List<Column> getColumns() {

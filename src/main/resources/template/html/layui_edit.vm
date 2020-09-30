@@ -10,7 +10,7 @@
 </head>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>修改${table.entityLowerCamel}</legend>
+    <legend>修改${table.remarks}</legend>
 </fieldset>
 <form class="layui-form" method="post" lay-filter="${table.entityLowerCamel}Edit-filter">
     #foreach($column in $table.columns)
@@ -18,7 +18,7 @@
             <input type="hidden" id="id" name="id">
         #else
             <div class="layui-form-item">
-                <label class="layui-form-label">${column.fieldName}</label>
+                <label class="layui-form-label">${column.remarks}</label>
                 <div class="layui-input-block">
                     <input type="text" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 </div>

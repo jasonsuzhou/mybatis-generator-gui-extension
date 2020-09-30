@@ -31,6 +31,8 @@ public class TableColumnEditorController extends BaseController implements Initi
     public TableColumn<TableColumnMetaData, String> c_java_type;
     public TableColumn<TableColumnMetaData, String> c_property_name;
     public TableColumn<TableColumnMetaData, String> c_type_handler;
+    public TableColumn<TableColumnMetaData, String> c_remarks;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -40,11 +42,14 @@ public class TableColumnEditorController extends BaseController implements Initi
         c_java_type.setCellValueFactory(new PropertyValueFactory<>("javaType"));
         c_property_name.setCellValueFactory(new PropertyValueFactory<>("propertyName"));
         c_type_handler.setCellValueFactory(new PropertyValueFactory<>("typeHandler"));
+        // add by jason
+        c_remarks.setCellValueFactory(new PropertyValueFactory<>("remarks"));
 
         c_checked.setCellFactory(CheckBoxTableCell.forTableColumn(c_checked));
         c_java_type.setCellFactory(TextFieldTableCell.forTableColumn());
         c_property_name.setCellFactory(TextFieldTableCell.forTableColumn());
         c_type_handler.setCellFactory(TextFieldTableCell.forTableColumn());
+        c_remarks.setCellFactory(TextFieldTableCell.forTableColumn());
 
         c_java_type.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).setJavaType(event.getNewValue()));
         c_property_name.setOnEditCommit(event -> event.getTableView().getItems().get(event.getTablePosition().getRow()).setPropertyName(event.getNewValue()));

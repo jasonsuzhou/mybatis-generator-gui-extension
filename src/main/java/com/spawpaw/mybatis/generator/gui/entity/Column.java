@@ -3,6 +3,7 @@ package com.spawpaw.mybatis.generator.gui.entity;
 import com.spawpaw.mybatis.generator.gui.util.ExampleUtil;
 import com.spawpaw.mybatis.generator.gui.util.JavaBeansUtil;
 import com.spawpaw.mybatis.generator.gui.util.RegexpUtil;
+import org.apache.commons.lang.StringUtils;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Field;
@@ -20,6 +21,9 @@ public class Column extends ConfigMatcher {
     public final String actualName;//真实列名称
     public final String fieldName;//该字段entity中的变量名称
     public final String fieldType;//该字段的类型
+    // add by jason start
+    public final String remarks;
+    // add by jason end
     public final String getterName;//该字段在entity中的getter名称
     public final String setterName;//该字段在entity中的setter名称
 
@@ -50,6 +54,7 @@ public class Column extends ConfigMatcher {
         fieldName = field.getName();
         fieldType = field.getType().getFullyQualifiedName();
         actualName = introspectedColumn.getActualColumnName();
+        remarks = introspectedColumn.getRemarks();
         getterName = JavaBeansUtil.getGetterMethodName(field.getName(), field.getType());
         setterName = JavaBeansUtil.getSetterMethodName(field.getName());
 
@@ -106,6 +111,13 @@ public class Column extends ConfigMatcher {
 
     public String getFieldName() {
         return fieldName;
+    }
+
+    public String getRemarks() {
+        if (StringUtils.isBlank(remarks)) {
+            return fieldName;
+        }
+        return remarks;
     }
 
     public String getGetterName() {

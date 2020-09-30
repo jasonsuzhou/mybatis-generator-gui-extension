@@ -22,6 +22,7 @@
         <columns>
             <TableColumn fx:id="c_checked" text="%ui.customizeColumns.column.checked" />
             <TableColumn fx:id="c_column_name" prefWidth="165.0" text="%ui.customizeColumns.column.name" />
+            <TableColumn fx:id="c_remarks" prefWidth="176.0" text="COMMENTS" />
             <TableColumn fx:id="c_jdbc_type" prefWidth="161.0" text="%ui.customizeColumns.column.jdbcType" />
             <TableColumn fx:id="c_java_type" prefWidth="160.0" text="%ui.customizeColumns.column.javaType" />
             <TableColumn fx:id="c_property_name" prefWidth="194.0" text="%ui.customizeColumns.column.propertyName" />
