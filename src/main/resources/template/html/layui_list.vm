@@ -17,14 +17,23 @@
         <div class="row">
             <form class="layui-form" lay-filter="${table.entityLowerCamel}SearchForm-filter" id="${table.entityLowerCamel}SearchForm" name="${table.entityLowerCamel}SearchForm">
                 <div class="layui-form-item">
-
+                    <!--
+                    <div class="layui-inline">
+                        <label class="layui-form-label ">id</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="id" id="id" class="layui-input">
+                        </div>
+                    </div>
+                    -->
                     #foreach($column in $table.columns)
+                        #if (${column.searched} == "true")
                     <div class="layui-inline">
                         <label class="layui-form-label ">${column.remarks}</label>
                         <div class="layui-input-block">
                             <input type="text" name="${column.fieldName}" id="${column.fieldName}" class="layui-input">
                         </div>
                     </div>
+                        #end
                     #end
                     <div class="layui-inline">
                         <button class="layui-btn layui-btn-sm" lay-submit="" lay-filter="${table.entityLowerCamel}-search"

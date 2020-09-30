@@ -28,7 +28,29 @@ public class TableColumnMetaData {
     private StringProperty typeHandler = new SimpleStringProperty();
 
     // add by jason
+    private BooleanProperty searched = new SimpleBooleanProperty(false);
+
     private StringProperty remarks = new SimpleStringProperty();
+
+    public boolean isChecked() {
+        return checked.get();
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked.set(checked);
+    }
+
+    public boolean isSearched() {
+        return searched.get();
+    }
+
+    public BooleanProperty searchedProperty() {
+        return searched;
+    }
+
+    public void setSearched(boolean searched) {
+        this.searched.set(searched);
+    }
 
     public String getRemarks() {
         return remarks.get();
@@ -72,6 +94,10 @@ public class TableColumnMetaData {
 
     public Boolean getChecked() {
         return this.checked.get();
+    }
+
+    public Boolean getSearched() {
+        return this.searched.get();
     }
 
     public void setChecked(Boolean checked) {

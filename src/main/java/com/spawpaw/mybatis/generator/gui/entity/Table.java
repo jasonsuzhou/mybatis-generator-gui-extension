@@ -22,6 +22,7 @@ public class Table extends ConfigMatcher {
     public final String entityPackage;
     public final String entityName;
     public final String entityLowerCamel;
+    public final String entityUpperCamel;
     public final String exampleName;
     public final String exampleLowerCamel;
     public final String mapperPackage;
@@ -43,7 +44,7 @@ public class Table extends ConfigMatcher {
         entityPackage = introspectedTable.getIbatis2SqlMapPackage();
         entityName = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
         entityLowerCamel = Utils.getLowerCamelCase(entityName);
-
+        entityUpperCamel = Utils.getUpperCamelCase(entityName);
         exampleName = introspectedTable.getExampleType();
         exampleLowerCamel = Utils.getLowerCamelCase(exampleName);
 
@@ -79,6 +80,10 @@ public class Table extends ConfigMatcher {
 
     public String getEntityLowerCamel() {
         return entityLowerCamel;
+    }
+
+    public String getEntityUpperCamel() {
+        return entityUpperCamel;
     }
 
     public String getExampleName() {

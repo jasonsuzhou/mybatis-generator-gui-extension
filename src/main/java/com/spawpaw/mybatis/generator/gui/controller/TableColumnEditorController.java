@@ -26,6 +26,7 @@ public class TableColumnEditorController extends BaseController implements Initi
     //    public TextField tf_filter;
     public TableView<TableColumnMetaData> table_view;
     public TableColumn<TableColumnMetaData, Boolean> c_checked;
+    public TableColumn<TableColumnMetaData, Boolean> c_searched;
     public TableColumn<TableColumnMetaData, String> c_column_name;
     public TableColumn<TableColumnMetaData, String> c_jdbc_type;
     public TableColumn<TableColumnMetaData, String> c_java_type;
@@ -43,9 +44,11 @@ public class TableColumnEditorController extends BaseController implements Initi
         c_property_name.setCellValueFactory(new PropertyValueFactory<>("propertyName"));
         c_type_handler.setCellValueFactory(new PropertyValueFactory<>("typeHandler"));
         // add by jason
+        c_searched.setCellValueFactory(new PropertyValueFactory<>("searched"));
         c_remarks.setCellValueFactory(new PropertyValueFactory<>("remarks"));
 
         c_checked.setCellFactory(CheckBoxTableCell.forTableColumn(c_checked));
+        c_searched.setCellFactory(CheckBoxTableCell.forTableColumn(c_checked));
         c_java_type.setCellFactory(TextFieldTableCell.forTableColumn());
         c_property_name.setCellFactory(TextFieldTableCell.forTableColumn());
         c_type_handler.setCellFactory(TextFieldTableCell.forTableColumn());

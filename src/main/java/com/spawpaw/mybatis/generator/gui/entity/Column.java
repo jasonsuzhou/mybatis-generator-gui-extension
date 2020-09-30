@@ -1,8 +1,10 @@
 package com.spawpaw.mybatis.generator.gui.entity;
 
+import com.spawpaw.mybatis.generator.gui.cache.TableColumnMetaDataCache;
 import com.spawpaw.mybatis.generator.gui.util.ExampleUtil;
 import com.spawpaw.mybatis.generator.gui.util.JavaBeansUtil;
 import com.spawpaw.mybatis.generator.gui.util.RegexpUtil;
+import com.spawpaw.mybatis.generator.gui.util.Utils;
 import org.apache.commons.lang.StringUtils;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -18,11 +20,15 @@ import java.util.Map;
  * @author BenBenShang spawpaw@hotmail.com
  */
 public class Column extends ConfigMatcher {
-    public final String actualName;//真实列名称
+    public final String fullTableName;// add by jason 所属的数据库和表名（db.table）
+    public final String globalColumnCacheKey;// add by jason 全局唯一定位某个数据库的某个表的某个字段信息
+    public final String actualName;//真实列名称db.table
     public final String fieldName;//该字段entity中的变量名称
+    public final String fieldNameUpperCamel;
     public final String fieldType;//该字段的类型
     // add by jason start
     public final String remarks;
+    public final String searched;
     // add by jason end
     public final String getterName;//该字段在entity中的getter名称
     public final String setterName;//该字段在entity中的setter名称
@@ -49,11 +55,18 @@ public class Column extends ConfigMatcher {
 
     public Column(Context context, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn, Map<String, String> parent) {
         super(introspectedColumn.getRemarks(), parent);
+        fullTableName =
+                introspectedTable.getFullyQualifiedTable().getIntrospectedCatalog()
+                        + "."
+                        + introspectedTable.getFullyQualifiedTable().getIntrospectedTableName();// add by jason
         Field field = JavaBeansUtil.getJavaBeansField(introspectedColumn, context, introspectedTable);
 
         fieldName = field.getName();
+        fieldNameUpperCamel = Utils.getUpperCamelCase(fieldName);
         fieldType = field.getType().getFullyQualifiedName();
         actualName = introspectedColumn.getActualColumnName();
+        globalColumnCacheKey = fullTableName + ":" + actualName;
+        searched = TableColumnMetaDataCache.isSearchedColumn(globalColumnCacheKey).toString();
         remarks = introspectedColumn.getRemarks();
         getterName = JavaBeansUtil.getGetterMethodName(field.getName(), field.getType());
         setterName = JavaBeansUtil.getSetterMethodName(field.getName());
@@ -113,11 +126,19 @@ public class Column extends ConfigMatcher {
         return fieldName;
     }
 
+    public String getFieldNameUpperCamel() {
+        return fieldNameUpperCamel;
+    }
+
     public String getRemarks() {
         if (StringUtils.isBlank(remarks)) {
             return fieldName;
         }
         return remarks;
+    }
+
+    public String getSearched(){
+        return searched;
     }
 
     public String getGetterName() {

@@ -4,6 +4,7 @@ import com.spawpaw.mybatis.generator.gui.DatabaseConfig;
 import com.spawpaw.mybatis.generator.gui.ProjectConfig;
 import com.spawpaw.mybatis.generator.gui.annotations.EnablePlugin;
 import com.spawpaw.mybatis.generator.gui.annotations.ExportToPlugin;
+import com.spawpaw.mybatis.generator.gui.cache.TableColumnMetaDataCache;
 import com.spawpaw.mybatis.generator.gui.entity.TableColumnMetaData;
 import com.spawpaw.mybatis.generator.gui.enums.DatabaseType;
 import com.spawpaw.mybatis.generator.gui.enums.DeclaredPlugins;
@@ -185,6 +186,13 @@ public class MBGRunner {
             if (!column.getChecked()) {
                 log.info("忽略列：{}", column.getColumnName());
                 tableConfiguration.addIgnoredColumn(new IgnoredColumn(column.getColumnName()));
+            } else if(column.getSearched()) { // add by json
+                String databaseName = tableConfiguration.getCatalog();
+                String tableName = tableConfiguration.getTableName();
+                String globalColumnKey = databaseName+"."+tableName+":"+column.getColumnName();
+                log.info("搜索列：{}", globalColumnKey);
+                //放到缓存里，生成页面的时候要用到 add by jason
+                TableColumnMetaDataCache.put(globalColumnKey, column);
             } else {
                 ColumnOverride columnOverride = new ColumnOverride(column.getColumnName());
                 columnOverride.setJavaProperty(column.getPropertyName());
