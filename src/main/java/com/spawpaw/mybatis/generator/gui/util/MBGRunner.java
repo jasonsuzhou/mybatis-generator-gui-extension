@@ -10,6 +10,7 @@ import com.spawpaw.mybatis.generator.gui.enums.DatabaseType;
 import com.spawpaw.mybatis.generator.gui.enums.DeclaredPlugins;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleStringProperty;
+import org.apache.commons.lang.StringUtils;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.*;
 import org.mybatis.generator.exception.InvalidConfigurationException;
@@ -186,7 +187,8 @@ public class MBGRunner {
             if (!column.getChecked()) {
                 log.info("忽略列：{}", column.getColumnName());
                 tableConfiguration.addIgnoredColumn(new IgnoredColumn(column.getColumnName()));
-            } else if(column.getSearched() || column.getRequired()) { // add by json
+            } else if(column.getSearched() || column.getRequired()
+                    || StringUtils.isNotBlank(column.getPageType())) { // add by json
                 String databaseName = tableConfiguration.getCatalog();
                 String tableName = tableConfiguration.getTableName();
                 String globalColumnKey = databaseName+"."+tableName+":"+column.getColumnName();

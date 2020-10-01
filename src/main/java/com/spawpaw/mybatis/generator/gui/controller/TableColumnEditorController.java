@@ -2,11 +2,13 @@ package com.spawpaw.mybatis.generator.gui.controller;
 
 import com.spawpaw.mybatis.generator.gui.entity.TableColumnMetaData;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.ChoiceBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,7 @@ public class TableColumnEditorController extends BaseController implements Initi
     public TableColumn<TableColumnMetaData, Boolean> c_checked;
     public TableColumn<TableColumnMetaData, Boolean> c_searched;
     public TableColumn<TableColumnMetaData, Boolean> c_required;
+    public TableColumn<TableColumnMetaData, String> c_page_type;
     public TableColumn<TableColumnMetaData, String> c_column_name;
     public TableColumn<TableColumnMetaData, String> c_jdbc_type;
     public TableColumn<TableColumnMetaData, String> c_java_type;
@@ -48,10 +51,14 @@ public class TableColumnEditorController extends BaseController implements Initi
         c_searched.setCellValueFactory(new PropertyValueFactory<>("searched"));
         c_required.setCellValueFactory(new PropertyValueFactory<>("required"));
         c_remarks.setCellValueFactory(new PropertyValueFactory<>("remarks"));
+        c_page_type.setCellValueFactory(new PropertyValueFactory<>("pageType"));
 
         c_checked.setCellFactory(CheckBoxTableCell.forTableColumn(c_checked));
         c_searched.setCellFactory(CheckBoxTableCell.forTableColumn(c_searched));
         c_required.setCellFactory(CheckBoxTableCell.forTableColumn(c_required));
+        ObservableList<String> pageTypeList =
+                FXCollections.observableArrayList("text","radio","checkbox","select","number","email","password","date","datetime","color");
+        c_page_type.setCellFactory(ChoiceBoxTableCell.forTableColumn(pageTypeList));
         c_java_type.setCellFactory(TextFieldTableCell.forTableColumn());
         c_property_name.setCellFactory(TextFieldTableCell.forTableColumn());
         c_type_handler.setCellFactory(TextFieldTableCell.forTableColumn());

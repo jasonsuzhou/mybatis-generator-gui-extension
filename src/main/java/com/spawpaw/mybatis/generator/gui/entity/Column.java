@@ -30,6 +30,7 @@ public class Column extends ConfigMatcher {
     public final String remarks;
     public final String searched;
     public final String required;
+    public final String pageType;
     // add by jason end
     public final String getterName;//该字段在entity中的getter名称
     public final String setterName;//该字段在entity中的setter名称
@@ -69,6 +70,7 @@ public class Column extends ConfigMatcher {
         globalColumnCacheKey = fullTableName + ":" + actualName;
         searched = TableColumnMetaDataCache.isSearchedColumn(globalColumnCacheKey).toString();
         required = TableColumnMetaDataCache.isRequiredColumn(globalColumnCacheKey).toString();
+        pageType = TableColumnMetaDataCache.getPageType(globalColumnCacheKey);
         remarks = introspectedColumn.getRemarks();
         getterName = JavaBeansUtil.getGetterMethodName(field.getName(), field.getType());
         setterName = JavaBeansUtil.getSetterMethodName(field.getName());

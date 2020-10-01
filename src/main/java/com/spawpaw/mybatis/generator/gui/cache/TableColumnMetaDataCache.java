@@ -47,4 +47,18 @@ public class TableColumnMetaDataCache {
         return data.getRequired();
     }
 
+    /**
+     * 页面元素类型,默认text类型
+     * "text","radio","checkbox","select","number","email","password","date","datetime","color"
+     * @param key
+     * @return
+     */
+    public static String getPageType(String key) {
+        TableColumnMetaData data = get(key);
+        if (data == null) {
+            return "text";
+        }
+        return data.getPageType();
+    }
+
 }

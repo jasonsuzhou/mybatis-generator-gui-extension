@@ -30,8 +30,21 @@ public class TableColumnMetaData {
     // add by jason
     private BooleanProperty searched = new SimpleBooleanProperty(false);//是否是可查询字段
     private BooleanProperty required = new SimpleBooleanProperty(false);//是否是必填字段
+    private StringProperty pageType = new SimpleStringProperty();
 
     private StringProperty remarks = new SimpleStringProperty();
+
+    public String getPageType() {
+        return pageType.get();
+    }
+
+    public StringProperty pageTypeProperty() {
+        return pageType;
+    }
+
+    public void setPageType(String pageType) {
+        this.pageType.set(pageType);
+    }
 
     public boolean isRequired() {
         return required.get();
