@@ -211,6 +211,9 @@ public class DatabaseConfig implements Serializable {
                 columnMetaData.setJdbcType(rs.getString("TYPE_NAME"));
                 // add by jason
                 columnMetaData.setRemarks(rs.getString("REMARKS"));
+                // 0-代表不能为空 1-代表可以为空
+                short nullable = rs.getShort("NULLABLE");
+                columnMetaData.setRequired(nullable == 0);
                 tableConfigs.get(tableName).add(columnMetaData);
             }
 

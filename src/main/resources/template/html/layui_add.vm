@@ -20,7 +20,11 @@
         <div class="layui-form-item">
             <label class="layui-form-label">${column.remarks}</label>
             <div class="layui-input-block">
-                <input type="text" lay-verify="required" name="${column.fieldName}" autocomplete="off" class="layui-input">
+                #if (${column.required} == "true")
+                    <input type="text" lay-verify="required" name="${column.fieldName}" autocomplete="off" class="layui-input">
+                #else
+                    <input type="text" name="${column.fieldName}" autocomplete="off" class="layui-input">
+                #end
             </div>
         </div>
         #end

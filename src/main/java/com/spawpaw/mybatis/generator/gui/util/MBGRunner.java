@@ -186,7 +186,7 @@ public class MBGRunner {
             if (!column.getChecked()) {
                 log.info("忽略列：{}", column.getColumnName());
                 tableConfiguration.addIgnoredColumn(new IgnoredColumn(column.getColumnName()));
-            } else if(column.getSearched()) { // add by json
+            } else if(column.getSearched() || column.getRequired()) { // add by json
                 String databaseName = tableConfiguration.getCatalog();
                 String tableName = tableConfiguration.getTableName();
                 String globalColumnKey = databaseName+"."+tableName+":"+column.getColumnName();

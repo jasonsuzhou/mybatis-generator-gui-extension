@@ -34,4 +34,17 @@ public class TableColumnMetaDataCache {
         return data.getSearched();
     }
 
+    /**
+     * 是否是必填字段，生成页面的时候可以按需生成必填的校验逻辑
+     * @param key
+     * @return
+     */
+    public static Boolean isRequiredColumn(String key) {
+        TableColumnMetaData data = get(key);
+        if (data == null) {
+            return Boolean.FALSE;
+        }
+        return data.getRequired();
+    }
+
 }

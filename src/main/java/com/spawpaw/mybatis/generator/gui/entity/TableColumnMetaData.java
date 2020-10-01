@@ -28,9 +28,22 @@ public class TableColumnMetaData {
     private StringProperty typeHandler = new SimpleStringProperty();
 
     // add by jason
-    private BooleanProperty searched = new SimpleBooleanProperty(false);
+    private BooleanProperty searched = new SimpleBooleanProperty(false);//是否是可查询字段
+    private BooleanProperty required = new SimpleBooleanProperty(false);//是否是必填字段
 
     private StringProperty remarks = new SimpleStringProperty();
+
+    public boolean isRequired() {
+        return required.get();
+    }
+
+    public BooleanProperty requiredProperty() {
+        return required;
+    }
+
+    public void setRequired(boolean required) {
+        this.required.set(required);
+    }
 
     public boolean isChecked() {
         return checked.get();
@@ -98,6 +111,10 @@ public class TableColumnMetaData {
 
     public Boolean getSearched() {
         return this.searched.get();
+    }
+
+    public Boolean getRequired() {
+        return this.required.get();
     }
 
     public void setChecked(Boolean checked) {
