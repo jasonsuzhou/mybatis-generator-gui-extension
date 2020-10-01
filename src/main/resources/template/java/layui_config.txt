@@ -35,3 +35,10 @@ templateConfig:
     destDir: src/main/resources
     destPackage: static.html.admin.${entityLowerCamel}
     destFileName: ${entityLowerCamel}Edit.html
+
+
+  # Detail Html Page
+  - template: html/layui_detail.vm
+    destDir: src/main/resources
+    destPackage: static.html.admin.${entityLowerCamel}
+    destFileName: ${entityLowerCamel}Detail.html
