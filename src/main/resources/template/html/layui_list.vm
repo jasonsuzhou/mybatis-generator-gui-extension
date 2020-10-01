@@ -164,7 +164,14 @@
         table.on('tool(${table.entityLowerCamel}-table)', function(obj) {
             switch (obj.event) {
                 case 'showDetail':
-                    layer.alert(JSON.stringify(obj.data));
+                    var id = obj.data.id;
+                    layer.open({
+                        type: 2,
+                        title: '编辑',
+                        skin: 'layui-layer-rim', //加上边框
+                        area: ['700px', '700px'], //宽高
+                        content: '${table.entityLowerCamel}Detail.html?id=' + id
+                    });
                     break;
                 case 'edit':
                     var id = obj.data.id;
