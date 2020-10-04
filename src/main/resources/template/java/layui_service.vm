@@ -108,8 +108,8 @@ ${table.daoObjName} ${table.entityLowerCamel}Mapper;
         ${table.exampleObjName}.Criteria criteria = example.createCriteria();
 #foreach($column in $table.columns)
     #if (${column.searched} == "true")
-        if (StringUtils.isNotBlank(${table.entityLowerCamel}.${column.getterName}()) {
-            criteria.and${column.fieldNameUpperCamel}EqualTo}(${table.entityLowerCamel}.${column.getterName}());
+        if (StringUtils.isNotBlank(${table.entityLowerCamel}.${column.getterName}())) {
+            criteria.and${column.fieldNameUpperCamel}EqualTo(${table.entityLowerCamel}.${column.getterName}());
         }
     #end
 #end

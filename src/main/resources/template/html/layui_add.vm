@@ -17,6 +17,8 @@
     #foreach($column in $table.columns)
         #if (${column.fieldName} == "id")
 
+        #elseif (${column.whoColumn} == "true")
+
         #else
         <div class="layui-form-item">
             #if (${column.required} == "true")
