@@ -60,6 +60,7 @@ public class Column extends ConfigMatcher {
     public String remarks; // 字段备注内容
     public final String searched; // 是否是可查询字段
     public final String required;  // 是否是必填字段
+    public final String showInList; // 是否显示在列表页面
     public final String pageType;
     public final String whoColumn;// 是否是who column
     public Set<String> valueSet = new HashSet<>();
@@ -103,6 +104,7 @@ public class Column extends ConfigMatcher {
         globalColumnCacheKey = fullTableName + ":" + actualName;
         searched = TableColumnMetaDataCache.isSearchedColumn(globalColumnCacheKey).toString();
         required = TableColumnMetaDataCache.isRequiredColumn(globalColumnCacheKey).toString();
+        showInList = TableColumnMetaDataCache.needShowInList(globalColumnCacheKey).toString();
         pageType = TableColumnMetaDataCache.getPageType(globalColumnCacheKey);
         remarks = introspectedColumn.getRemarks();
         if ("radio".equals(pageType) || "select".equals(pageType) || "checkbox".equals(pageType)) {
@@ -179,6 +181,10 @@ public class Column extends ConfigMatcher {
 
     public String getPageType() {
         return pageType;
+    }
+
+    public String getShowInList() {
+        return showInList;
     }
 
     public String getSearched(){

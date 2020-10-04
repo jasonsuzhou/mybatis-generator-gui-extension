@@ -37,6 +37,7 @@ public class TableColumnEditorController extends BaseController implements Initi
     public TableColumn<TableColumnMetaData, String> c_property_name;
     public TableColumn<TableColumnMetaData, String> c_type_handler;
     public TableColumn<TableColumnMetaData, String> c_remarks;
+    public TableColumn<TableColumnMetaData, Boolean> c_show_in_list;
 
 
     @Override
@@ -50,12 +51,14 @@ public class TableColumnEditorController extends BaseController implements Initi
         // add by jason
         c_searched.setCellValueFactory(new PropertyValueFactory<>("searched"));
         c_required.setCellValueFactory(new PropertyValueFactory<>("required"));
+        c_show_in_list.setCellValueFactory(new PropertyValueFactory("showInList"));
         c_remarks.setCellValueFactory(new PropertyValueFactory<>("remarks"));
         c_page_type.setCellValueFactory(new PropertyValueFactory<>("pageType"));
 
         c_checked.setCellFactory(CheckBoxTableCell.forTableColumn(c_checked));
         c_searched.setCellFactory(CheckBoxTableCell.forTableColumn(c_searched));
         c_required.setCellFactory(CheckBoxTableCell.forTableColumn(c_required));
+        c_show_in_list.setCellFactory(CheckBoxTableCell.forTableColumn(c_show_in_list));
         ObservableList<String> pageTypeList =
                 FXCollections.observableArrayList("text","radio","checkbox","select","number","email","password","date","datetime","color");
         c_page_type.setCellFactory(ChoiceBoxTableCell.forTableColumn(pageTypeList));

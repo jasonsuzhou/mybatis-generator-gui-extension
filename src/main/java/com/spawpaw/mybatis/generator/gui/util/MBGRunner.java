@@ -188,11 +188,12 @@ public class MBGRunner {
                 log.info("忽略列：{}", column.getColumnName());
                 tableConfiguration.addIgnoredColumn(new IgnoredColumn(column.getColumnName()));
             } else if(column.getSearched() || column.getRequired()
-                    || StringUtils.isNotBlank(column.getPageType())) { // add by json
+                    || StringUtils.isNotBlank(column.getPageType())
+                    || column.getShowInList()) { // add by json
                 String databaseName = tableConfiguration.getCatalog();
                 String tableName = tableConfiguration.getTableName();
                 String globalColumnKey = databaseName+"."+tableName+":"+column.getColumnName();
-                log.info("搜索列：{}", globalColumnKey);
+                log.info("自定义配置列：{}", globalColumnKey);
                 //放到缓存里，生成页面的时候要用到 add by jason
                 TableColumnMetaDataCache.put(globalColumnKey, column);
             } else {

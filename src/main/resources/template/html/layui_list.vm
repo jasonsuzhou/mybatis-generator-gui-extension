@@ -62,6 +62,7 @@
             <script type="text/html" id="${table.entityLowerCamel}ListActionBar">
                 <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="showDetail"><i class="layui-icon layui-icon-about"></i>详细</a>
             </script>
         </div>
     </div>
@@ -111,11 +112,12 @@
             #foreach($column in $table.columns)
                 #if (${column.fieldName} == "id")
                     , {field: 'id', title: '主键', sort:true, align: 'lef',event: 'showDetail'}
-                #else
+                #elseif (${column.showInList} == "true")
                     , {field: '${column.fieldName}', title: '${column.remarks}',sort:true, align: 'left'}
+                #else
                 #end
             #end
-                , {title: '操作', toolbar: '#${table.entityLowerCamel}ListActionBar', width: 350}
+                , {title: '操作', toolbar: '#${table.entityLowerCamel}ListActionBar', width: 200}
             ]]
             , page: true
             , done: function (res) {

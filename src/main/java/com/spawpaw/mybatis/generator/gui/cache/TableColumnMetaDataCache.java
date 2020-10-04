@@ -48,6 +48,19 @@ public class TableColumnMetaDataCache {
     }
 
     /**
+     * 是否需要显示在列表页面的配置值
+     * @param key
+     * @return
+     */
+    public static Boolean needShowInList(String key) {
+        TableColumnMetaData data = get(key);
+        if (data == null) {
+            return Boolean.FALSE;
+        }
+        return data.getShowInList();
+    }
+
+    /**
      * 页面元素类型,默认text类型
      * "text","radio","checkbox","select","number","email","password","date","datetime","color"
      * @param key
