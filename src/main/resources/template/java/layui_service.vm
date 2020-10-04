@@ -2,15 +2,20 @@ package ${table.basePackage}.service;
 
 import ${table.basePackage}.common.APIResponse;
 import ${table.basePackage}.common.CommonResponse;
+import ${table.basePackage}.core.domain.User;
 import ${table.basePackage}.entity.${table.entityObjName};
 import ${table.basePackage}.entity.${table.exampleObjName};
 import ${table.daoPackage}.${table.daoObjName};
 import ${table.basePackage}.service.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -118,6 +123,22 @@ ${table.daoObjName} ${table.entityLowerCamel}Mapper;
 
     private String verifyAdd(${table.entityObjName} ${table.entityLowerCamel}) {
         // TODO
+#foreach($column in $table.columns)
+    #if (${column.whoColumn} == "true")
+    Subject subject = SecurityUtils.getSubject();
+    User user = (User)subject.getPrincipal();
+        #break
+    #end
+#end
+#foreach($column in $table.columns)
+    #if (${column.whoColumn} == "true")
+        #if(${column.fieldName.indexOf("By")} != -1 && ${column.fieldName.indexOf("cre")} != -1)
+            ${table.entityLowerCamel}.${column.setterName}(user.getUsername());
+        #elseif(${column.fieldName.indexOf("Date")} != -1 && ${column.fieldName.indexOf("cre")} != -1)
+            ${table.entityLowerCamel}.${column.setterName}(new Date());
+        #end
+    #end
+#end
         return null;
     }
 
@@ -128,6 +149,22 @@ ${table.daoObjName} ${table.entityLowerCamel}Mapper;
 
     private String verifyUpdate(${table.entityObjName} ${table.entityLowerCamel}) {
         // TODO
+#foreach($column in $table.columns)
+    #if (${column.whoColumn} == "true")
+    Subject subject = SecurityUtils.getSubject();
+    User user = (User)subject.getPrincipal();
+        #break
+    #end
+#end
+#foreach($column in $table.columns)
+    #if (${column.whoColumn} == "true")
+        #if(${column.fieldName.indexOf("By")} != -1 && ${column.fieldName.indexOf("up")} != -1)
+            ${table.entityLowerCamel}.${column.setterName}(user.getUsername());
+        #elseif(${column.fieldName.indexOf("Date")} != -1 && ${column.fieldName.indexOf("up")} != -1)
+            ${table.entityLowerCamel}.${column.setterName}(new Date());
+        #end
+    #end
+#end
         return null;
     }
 
