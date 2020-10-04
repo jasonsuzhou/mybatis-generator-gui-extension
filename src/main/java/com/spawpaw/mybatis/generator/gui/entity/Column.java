@@ -64,7 +64,7 @@ public class Column extends ConfigMatcher {
     public final String editable; //是否是可编辑的字段
     public final String pageType;
     public final String whoColumn;// 是否是who column
-    public Set<String> valueSet = new HashSet<>();
+    public Set<String> valueSet = new LinkedHashSet<>();
     // add by jason end
     public final String getterName;//该字段在entity中的getter名称
     public final String setterName;//该字段在entity中的setter名称

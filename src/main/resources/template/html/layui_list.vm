@@ -30,7 +30,16 @@
                     <div class="layui-inline">
                         <label class="layui-form-label ">${column.remarks}</label>
                         <div class="layui-input-block">
-                            <input type="text" name="${column.fieldName}" id="${column.fieldName}" class="layui-input">
+                            #if(${column.pageType} == "radio")
+                                <select name="${column.fieldName}" lay-verify="">
+                                    <option value=""></option>
+                                    #foreach($optionItem in $column.valueSet)
+                                    <option value="${optionItem}">${optionItem}</option>
+                                    #end
+                                </select>
+                            #else
+                                <input type="text" name="${column.fieldName}" id="${column.fieldName}" class="layui-input">
+                            #end
                         </div>
                     </div>
                         #end
