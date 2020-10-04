@@ -57,7 +57,7 @@
         var layer = layui.layer;
         var id = getParam('id');
         $.ajax({
-            url: '../../../api/phoneBlack/queryById/' + id,
+            url: '../../../api/${table.entityLowerCamel}/queryById/' + id,
             type: 'get',
             dataTye: 'json',
             success: function (data) {
