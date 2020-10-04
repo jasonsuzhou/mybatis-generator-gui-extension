@@ -145,6 +145,7 @@
                         title: '添加',
                         skin: 'layui-layer-rim', //加上边框
                         area: ['700px', '700px'], //宽高
+                        maxmin: true,
                         content: '${table.entityLowerCamel}Add.html'+new Date().getTime()
                     });
                     break;
@@ -181,6 +182,7 @@
                         title: '查询详情',
                         skin: 'layui-layer-rim', //加上边框
                         area: ['700px', '700px'], //宽高
+                        maxmin: true,
                         content: '${table.entityLowerCamel}Detail.html?id=' + id
                     });
                     break;
@@ -191,6 +193,7 @@
                         title: '编辑',
                         skin: 'layui-layer-rim', //加上边框
                         area: ['700px', '700px'], //宽高
+                        maxmin: true,
                         content: '${table.entityLowerCamel}Edit.html?id=' + id+"&rdn="+new Date().getTime()
                     });
                     break;
