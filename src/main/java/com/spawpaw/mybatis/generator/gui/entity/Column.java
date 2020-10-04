@@ -61,6 +61,7 @@ public class Column extends ConfigMatcher {
     public final String searched; // 是否是可查询字段
     public final String required;  // 是否是必填字段
     public final String showInList; // 是否显示在列表页面
+    public final String editable; //是否是可编辑的字段
     public final String pageType;
     public final String whoColumn;// 是否是who column
     public Set<String> valueSet = new HashSet<>();
@@ -104,6 +105,7 @@ public class Column extends ConfigMatcher {
         globalColumnCacheKey = fullTableName + ":" + actualName;
         searched = TableColumnMetaDataCache.isSearchedColumn(globalColumnCacheKey).toString();
         required = TableColumnMetaDataCache.isRequiredColumn(globalColumnCacheKey).toString();
+        editable = TableColumnMetaDataCache.isEditableColumn(globalColumnCacheKey).toString();
         showInList = TableColumnMetaDataCache.needShowInList(globalColumnCacheKey).toString();
         pageType = TableColumnMetaDataCache.getPageType(globalColumnCacheKey);
         remarks = introspectedColumn.getRemarks();
@@ -185,6 +187,10 @@ public class Column extends ConfigMatcher {
 
     public String getShowInList() {
         return showInList;
+    }
+
+    public String getEditable() {
+        return editable;
     }
 
     public String getSearched(){

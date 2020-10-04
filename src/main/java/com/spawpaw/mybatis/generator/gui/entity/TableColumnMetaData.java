@@ -30,10 +30,23 @@ public class TableColumnMetaData {
     // add by jason
     private BooleanProperty searched = new SimpleBooleanProperty(false);//是否是可查询字段
     private BooleanProperty required = new SimpleBooleanProperty(false);//是否是必填字段
+    private BooleanProperty editable = new SimpleBooleanProperty(true);//是否是可编辑字段
     private BooleanProperty showInList = new SimpleBooleanProperty(true);//是否需要显示在列表页面
     private StringProperty pageType = new SimpleStringProperty();
 
     private StringProperty remarks = new SimpleStringProperty();
+
+    public boolean isEditable() {
+        return editable.get();
+    }
+
+    public BooleanProperty editableProperty() {
+        return editable;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable.set(editable);
+    }
 
     public boolean isShowInList() {
         return showInList.get();
@@ -93,6 +106,10 @@ public class TableColumnMetaData {
 
     public Boolean getShowInList() {
         return this.showInList.get();
+    }
+
+    public Boolean getEditable() {
+        return this.editable.get();
     }
 
     public String getRemarks() {

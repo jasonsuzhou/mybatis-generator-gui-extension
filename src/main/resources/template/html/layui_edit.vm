@@ -18,7 +18,13 @@
         #if (${column.fieldName} == "id")
             <input type="hidden" id="id" name="id">
         #elseif (${column.whoColumn} == "true")
-
+        #elseif (${column.editable} == "false")
+        <div class="layui-form-item">
+        <label class="layui-form-label">${column.remarks}</label>
+        <div class="layui-input-block">
+            <input type="text" name="${column.fieldName}" disabled readonly class="layui-input layui-disabled">
+        </div>
+        </div>
         #else
             <div class="layui-form-item">
             #if (${column.required} == "true")

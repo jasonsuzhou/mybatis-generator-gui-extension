@@ -187,7 +187,7 @@ public class MBGRunner {
             if (!column.getChecked()) {
                 log.info("忽略列：{}", column.getColumnName());
                 tableConfiguration.addIgnoredColumn(new IgnoredColumn(column.getColumnName()));
-            } else if(column.getSearched() || column.getRequired()
+            } else if(column.getSearched() || column.getRequired() || column.getEditable()
                     || StringUtils.isNotBlank(column.getPageType())
                     || column.getShowInList()) { // add by json
                 String databaseName = tableConfiguration.getCatalog();

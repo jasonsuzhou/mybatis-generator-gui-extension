@@ -61,6 +61,19 @@ public class TableColumnMetaDataCache {
     }
 
     /**
+     * 是否是可编辑的字段
+     * @param key
+     * @return
+     */
+    public static Boolean isEditableColumn(String key) {
+        TableColumnMetaData data = get(key);
+        if (data == null) {
+            return Boolean.FALSE;
+        }
+        return data.getEditable();
+    }
+
+    /**
      * 页面元素类型,默认text类型
      * "text","radio","checkbox","select","number","email","password","date","datetime","color"
      * @param key
