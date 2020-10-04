@@ -45,14 +45,14 @@
                         #end
                     #end
                     <div class="layui-inline">
-                        <button class="layui-btn layui-btn-sm" lay-submit="" lay-filter="${table.entityLowerCamel}-search"
+                        <button class="layui-btn" lay-submit="" lay-filter="${table.entityLowerCamel}-search"
                                 id="${table.entityLowerCamel}-search">
                             <i class="layui-icon layui-icon-search"></i>搜索
                         </button>
-                        <button class="layui-btn layui-btn-sm" lay-submit="" lay-filter="${table.entityLowerCamel}-clear">
+                        <button class="layui-btn" lay-submit="" lay-filter="${table.entityLowerCamel}-clear">
                             <i class="layui-icon layui-icon-fonts-clear"></i>重置
                         </button>
-                        <button class="layui-btn layui-btn-sm" lay-submit="" lay-filter="${table.entityLowerCamel}-export">
+                        <button class="layui-btn" lay-submit="" lay-filter="${table.entityLowerCamel}-export">
                             <i class="layui-icon layui-icon-export"></i>导出
                         </button>
                     </div>
@@ -71,7 +71,7 @@
             <script type="text/html" id="${table.entityLowerCamel}ListActionBar">
                 <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
-                <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="showDetail"><i class="layui-icon layui-icon-about"></i>详细</a>
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="showDetail"><i class="layui-icon layui-icon-about"></i>详细</a>
             </script>
         </div>
     </div>
