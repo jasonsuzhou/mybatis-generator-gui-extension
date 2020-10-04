@@ -33,6 +33,22 @@ public class Column extends ConfigMatcher {
         whoColumnList.add("createBy");
         whoColumnList.add("updatedBy");
         whoColumnList.add("updateBy");
+        whoColumnList.add("created_time");
+        whoColumnList.add("create_time");
+        whoColumnList.add("updated_time");
+        whoColumnList.add("update_time");
+        whoColumnList.add("createdTime");
+        whoColumnList.add("createTime");
+        whoColumnList.add("updatedTime");
+        whoColumnList.add("updateTime");
+        whoColumnList.add("created_date");
+        whoColumnList.add("create_date");
+        whoColumnList.add("updated_date");
+        whoColumnList.add("update_date");
+        whoColumnList.add("createdDate");
+        whoColumnList.add("createDate");
+        whoColumnList.add("updatedDate");
+        whoColumnList.add("updateDate");
     }
 
 
