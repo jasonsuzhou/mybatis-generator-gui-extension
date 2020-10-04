@@ -11,6 +11,8 @@ import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.config.Context;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +22,20 @@ import java.util.Map;
  * @author BenBenShang spawpaw@hotmail.com
  */
 public class Column extends ConfigMatcher {
+
+    private static List<String> whoColumnList = new ArrayList<>();
+    static {
+        whoColumnList.add("created_by");
+        whoColumnList.add("create_by");
+        whoColumnList.add("updated_by");
+        whoColumnList.add("update_by");
+        whoColumnList.add("createdBy");
+        whoColumnList.add("createBy");
+        whoColumnList.add("updatedBy");
+        whoColumnList.add("updateBy");
+    }
+
+
     public final String fullTableName;// add by jason 所属的数据库和表名（db.table）
     public final String globalColumnCacheKey;// add by jason 全局唯一定位某个数据库的某个表的某个字段信息
     public final String actualName;//真实列名称db.table
@@ -27,10 +43,11 @@ public class Column extends ConfigMatcher {
     public final String fieldNameUpperCamel;
     public final String fieldType;//该字段的类型
     // add by jason start
-    public final String remarks;
-    public final String searched;
-    public final String required;
+    public final String remarks; // 字段备注内容
+    public final String searched; // 是否是可查询字段
+    public final String required;  // 是否是必填字段
     public final String pageType;
+    public final String whoColumn;// 是否是who column
     // add by jason end
     public final String getterName;//该字段在entity中的getter名称
     public final String setterName;//该字段在entity中的setter名称
@@ -64,6 +81,7 @@ public class Column extends ConfigMatcher {
         Field field = JavaBeansUtil.getJavaBeansField(introspectedColumn, context, introspectedTable);
 
         fieldName = field.getName();
+        whoColumn = String.valueOf(whoColumnList.contains(fieldName));
         fieldNameUpperCamel = Utils.getUpperCamelCase(fieldName);
         fieldType = field.getType().getFullyQualifiedName();
         actualName = introspectedColumn.getActualColumnName();
@@ -147,6 +165,10 @@ public class Column extends ConfigMatcher {
 
     public String getRequired() {
         return required;
+    }
+
+    public String getWhoColumn() {
+        return whoColumn;
     }
 
     public String getGetterName() {
