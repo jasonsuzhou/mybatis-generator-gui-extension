@@ -24,12 +24,24 @@
             #if (${column.required} == "true")
             <label class="layui-form-label required">${column.remarks}</label>
             <div class="layui-input-block">
+                #if (${column.pageType} == "radio")
+                    #foreach($optionItem in $column.valueSet)
+                        <input type="radio" name="${column.fieldName}" value="${optionItem}" title="${optionItem}">
+                    #end
+                #else
                 <input type="text" lay-verify="required" name="${column.fieldName}" autocomplete="off" class="layui-input">
+                #end
             </div>
             #else
             <label class="layui-form-label">${column.remarks}</label>
             <div class="layui-input-block">
+                #if (${column.pageType} == "radio")
+                    #foreach($optionItem in $column.valueSet)
+                        <input type="radio" name="${column.fieldName}" value="${optionItem}" title="${optionItem}">
+                    #end
+                #else
                 <input type="text" name="${column.fieldName}" autocomplete="off" class="layui-input">
+                #end
             </div>
             #end
         </div>

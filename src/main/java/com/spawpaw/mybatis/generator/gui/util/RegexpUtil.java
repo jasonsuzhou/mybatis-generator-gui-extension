@@ -1,7 +1,7 @@
 package com.spawpaw.mybatis.generator.gui.util;
 
-import java.util.LinkedList;
-import java.util.List;
+
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,4 +39,25 @@ public class RegexpUtil {
         }
         return result;
     }
+
+    /**
+     * 如果是字段值是在固定一些数据中选择那么字段的备注可以写成：字段名:可选值1/可选值2<br/>
+     * 此方法用来判断字段是否有可选值并把可选值解析成一个列表
+     * @param plainText 原始字段名
+     * @param valueSet 解析后的可选值列表
+     * @return 返回解析后的字段名，也就是去掉括号内容的最后字段名是什么
+     */
+    public static String parseValueSet(String plainText, Set<String> valueSet) {
+        if (plainText.contains("：")) {
+            plainText = plainText.replace("：",":");
+        }
+        if (plainText.contains(":")) {
+            String ss[] = plainText.split(":");
+            String array[] = ss[1].split("/");
+            Collections.addAll(valueSet, array);
+            return ss[0];
+        }
+        return plainText;
+    }
+
 }
