@@ -30,6 +30,7 @@
             <TableColumn fx:id="c_column_name" prefWidth="165.0" text="%ui.customizeColumns.column.name" />
             <TableColumn fx:id="c_remarks" prefWidth="176.0" text="COMMENTS" />
             <TableColumn fx:id="c_show_in_list" prefWidth="100.0" text="ShowInList" />
+            <TableColumn fx:id="c_show_in_add" prefWidth="120.0" text="ShowInAdd:Edit" />
             <TableColumn fx:id="c_editable" text="editable" />
             <TableColumn fx:id="c_jdbc_type" prefWidth="161.0" text="%ui.customizeColumns.column.jdbcType" />
             <TableColumn fx:id="c_java_type" prefWidth="160.0" text="%ui.customizeColumns.column.javaType" />

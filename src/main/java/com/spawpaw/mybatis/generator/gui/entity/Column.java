@@ -61,6 +61,7 @@ public class Column extends ConfigMatcher {
     public final String searched; // 是否是可查询字段
     public final String required;  // 是否是必填字段
     public final String showInList; // 是否显示在列表页面
+    public final String showInAdd; //是否显示在添加页面
     public final String editable; //是否是可编辑的字段
     public final String pageType;
     public final String whoColumn;// 是否是who column
@@ -107,6 +108,7 @@ public class Column extends ConfigMatcher {
         required = TableColumnMetaDataCache.isRequiredColumn(globalColumnCacheKey).toString();
         editable = TableColumnMetaDataCache.isEditableColumn(globalColumnCacheKey).toString();
         showInList = TableColumnMetaDataCache.needShowInList(globalColumnCacheKey).toString();
+        showInAdd = TableColumnMetaDataCache.needShowInAdd(globalColumnCacheKey).toString();
         pageType = TableColumnMetaDataCache.getPageType(globalColumnCacheKey);
         remarks = introspectedColumn.getRemarks();
         if ("radio".equals(pageType) || "select".equals(pageType) || "checkbox".equals(pageType)) {

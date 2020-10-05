@@ -32,9 +32,22 @@ public class TableColumnMetaData {
     private BooleanProperty required = new SimpleBooleanProperty(false);//是否是必填字段
     private BooleanProperty editable = new SimpleBooleanProperty(true);//是否是可编辑字段
     private BooleanProperty showInList = new SimpleBooleanProperty(true);//是否需要显示在列表页面
+    private BooleanProperty showInAdd = new SimpleBooleanProperty(true);//是否需要显示在添加页面
     private StringProperty pageType = new SimpleStringProperty();
 
     private StringProperty remarks = new SimpleStringProperty();
+
+    public boolean isShowInAdd() {
+        return showInAdd.get();
+    }
+
+    public BooleanProperty showInAddProperty() {
+        return showInAdd;
+    }
+
+    public void setShowInAdd(boolean showInAdd) {
+        this.showInAdd.set(showInAdd);
+    }
 
     public boolean isEditable() {
         return editable.get();
@@ -106,6 +119,10 @@ public class TableColumnMetaData {
 
     public Boolean getShowInList() {
         return this.showInList.get();
+    }
+
+    public Boolean getShowInAdd() {
+        return showInAdd.get();
     }
 
     public Boolean getEditable() {

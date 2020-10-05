@@ -189,7 +189,7 @@ public class MBGRunner {
                 tableConfiguration.addIgnoredColumn(new IgnoredColumn(column.getColumnName()));
             } else if(column.getSearched() || column.getRequired() || column.getEditable()
                     || StringUtils.isNotBlank(column.getPageType())
-                    || column.getShowInList()) { // add by json
+                    || column.getShowInList() || column.getShowInAdd()) { // add by json
                 String databaseName = tableConfiguration.getCatalog();
                 String tableName = tableConfiguration.getTableName();
                 String globalColumnKey = databaseName+"."+tableName+":"+column.getColumnName();

@@ -61,6 +61,19 @@ public class TableColumnMetaDataCache {
     }
 
     /**
+     * 是否需要显示在添加页面的配置值
+     * @param key
+     * @return
+     */
+    public static Boolean needShowInAdd(String key) {
+        TableColumnMetaData data = get(key);
+        if (data == null) {
+            return Boolean.FALSE;
+        }
+        return data.getShowInAdd();
+    }
+
+    /**
      * 是否是可编辑的字段
      * @param key
      * @return
