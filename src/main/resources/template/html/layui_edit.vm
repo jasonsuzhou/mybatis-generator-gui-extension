@@ -34,8 +34,15 @@
                     #foreach($optionItem in $column.valueSet)
                         <input type="radio" name="${column.fieldName}" value="${optionItem}" title="${optionItem}">
                     #end
+                #elseif(${column.pageType} == "select")
+                    <select name="${column.fieldName}" lay-verify="">
+                        <option value=""></option>
+                        #foreach($optionItem in $column.valueSet)
+                            <option value="${optionItem}">${optionItem}</option>
+                        #end
+                    </select>
                 #else
-                <input type="text" lay-verify="required" name="${column.fieldName}" autocomplete="off" class="layui-input">
+                <input type="${column.pageType}" lay-verify="required" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end
             </div>
             #else
@@ -45,8 +52,15 @@
                     #foreach($optionItem in $column.valueSet)
                         <input type="radio" name="${column.fieldName}" value="${optionItem}" title="${optionItem}">
                     #end
+                #elseif(${column.pageType} == "select")
+                    <select name="${column.fieldName}" lay-verify="">
+                        <option value=""></option>
+                        #foreach($optionItem in $column.valueSet)
+                            <option value="${optionItem}">${optionItem}</option>
+                        #end
+                    </select>
                 #else
-                <input type="text" name="${column.fieldName}" autocomplete="off" class="layui-input">
+                <input type="${column.pageType}" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end
             </div>
             #end
