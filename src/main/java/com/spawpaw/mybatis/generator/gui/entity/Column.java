@@ -184,6 +184,9 @@ public class Column extends ConfigMatcher {
     }
 
     public String getPageType() {
+        if (StringUtils.isBlank(pageType)) {
+            return "text";
+        }
         return pageType;
     }
 
