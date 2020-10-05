@@ -76,6 +76,7 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="/js/system.js" charset="utf-8"></script>
 <script>
     var queryUrl = "../../../api/${table.entityLowerCamel}/findByPage";
     var deleteUrl = "../../../api/${table.entityLowerCamel}/deleteById";
