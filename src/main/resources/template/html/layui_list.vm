@@ -69,9 +69,9 @@
         <div class="row">
             <script type="text/html" id="toolbarHead">
                 <div class="layui-btn-container">
-                    <button class="layui-btn layui-btn-sm" id="btnRefresh" lay-event="refresh"><i class="layui-icon layui-icon-refresh-3"></i>刷新</button>
-                    <button class="layui-btn layui-btn-normal layui-btn-sm" id="btnAdd" lay-event="add"><i class="layui-icon layui-icon-add-1"></i>添加</button>
-                    <button class="layui-btn layui-btn-danger layui-btn-sm" lay-event="deleteBatch"><i class="layui-icon layui-icon-delete"></i>批量删除</button>
+                    <button class="layui-btn" id="btnRefresh" lay-event="refresh"><i class="layui-icon layui-icon-refresh-3"></i>刷新</button>
+                    <button class="layui-btn layui-btn-normal" id="btnAdd" lay-event="add"><i class="layui-icon layui-icon-add-1"></i>添加</button>
+                    <button class="layui-btn layui-btn-danger" lay-event="deleteBatch"><i class="layui-icon layui-icon-delete"></i>批量删除</button>
                 </div>
             </script>
             <table class="layui-hide" id="${table.entityLowerCamel}-table" lay-filter="${table.entityLowerCamel}-table"></table>
