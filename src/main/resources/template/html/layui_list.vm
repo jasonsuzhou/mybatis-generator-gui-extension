@@ -191,7 +191,7 @@
                         skin: 'layui-layer-rim', //加上边框
                         area: ['700px', '700px'], //宽高
                         maxmin: true,
-                        content: '${table.entityLowerCamel}Detail.html?id=' + id
+                        content: '${table.entityLowerCamel}Detail.html?id=' + id+'&rnd='+new Date().getTime()
                     });
                     break;
                 case 'edit':

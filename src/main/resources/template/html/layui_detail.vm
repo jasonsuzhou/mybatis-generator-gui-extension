@@ -21,10 +21,14 @@
                     </colgroup>
                     <script id="demo" type="text/html">
                         {{#  layui.each(d.columnList, function(index, item){ }}
+                        {{#  if(index === 0 || (index > 0 && index % 2 === 0)){ }}
                         <tr>
+                            {{#  } }}
                             <td>{{item.label}}</td>
                             <td>{{item.value }}</td>
+                            {{#  if(index === 1 || (index > 1 && index % 1 === 1)){ }}
                         </tr>
+                        {{#  } }}
                         {{#  }); }}
                         {{#  if(d.columnList.length === 0){ }}
                         无数据
