@@ -59,6 +59,13 @@
                             <option value="${optionItem}">${optionItem}</option>
                         #end
                     </select>
+                #elseif(${column.pageType} == "select-search")
+                    <select name="${column.fieldName}" lay-verify="" lay-search>
+                        <option value="">--请选择--</option>
+                        #foreach($optionItem in $column.valueSet)
+                            <option value="${optionItem}">${optionItem}</option>
+                        #end
+                    </select>
                 #else
                 <input type="${column.pageType}" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end

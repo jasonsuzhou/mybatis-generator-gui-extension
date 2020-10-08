@@ -66,7 +66,7 @@ public class TableColumnEditorController extends BaseController implements Initi
         c_show_in_list.setCellFactory(CheckBoxTableCell.forTableColumn(c_show_in_list));
         c_show_in_add.setCellFactory(CheckBoxTableCell.forTableColumn(c_show_in_add));
         ObservableList<String> pageTypeList =
-                FXCollections.observableArrayList("text","radio","checkbox","select","number","email","password","date","datetime","color");
+                FXCollections.observableArrayList("text","radio","checkbox","select","number","email","password","date","datetime","color","select-search");
         c_page_type.setCellFactory(ChoiceBoxTableCell.forTableColumn(pageTypeList));
         c_java_type.setCellFactory(TextFieldTableCell.forTableColumn());
         c_property_name.setCellFactory(TextFieldTableCell.forTableColumn());

@@ -88,7 +88,7 @@ public class TableColumnMetaDataCache {
 
     /**
      * 页面元素类型,默认text类型
-     * "text","radio","checkbox","select","number","email","password","date","datetime","color"
+     * "text","radio","checkbox","select","number","email","password","date","datetime","color","select-search"
      * @param key
      * @return
      */
