@@ -29,19 +29,21 @@
                         <input type="radio" name="${column.fieldName}" value="${optionItem}" title="${optionItem}">
                     #end
                 #elseif(${column.pageType} == "select")
-                    <select name="${column.fieldName}" lay-verify="">
+                    <select name="${column.fieldName}" lay-verify="required">
                         <option value="">--请选择--</option>
                         #foreach($optionItem in $column.valueSet)
                             <option value="${optionItem}">${optionItem}</option>
                         #end
                     </select>
                 #elseif(${column.pageType} == "select-search")
-                    <select name="${column.fieldName}" lay-verify="" lay-search>
+                    <select name="${column.fieldName}" lay-verify="required" lay-search>
                         <option value="">--请选择--</option>
                         #foreach($optionItem in $column.valueSet)
                             <option value="${optionItem}">${optionItem}</option>
                         #end
                     </select>
+                #elseif(${column.pageType} == "select-dict")
+                    <select name="${column.fieldName}" lay-verify="required" data-type="sysDict" data-title="${column.valueSetString}"></select>
                 #else
                 <input type="${column.pageType}" lay-verify="required" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end
@@ -60,6 +62,15 @@
                             <option value="${optionItem}">${optionItem}</option>
                         #end
                     </select>
+                #elseif(${column.pageType} == "select-search")
+                    <select name="${column.fieldName}" lay-verify="" lay-search>
+                        <option value="">--请选择--</option>
+                        #foreach($optionItem in $column.valueSet)
+                            <option value="${optionItem}">${optionItem}</option>
+                        #end
+                    </select>
+                #elseif(${column.pageType} == "select-dict")
+                    <select name="${column.fieldName}" lay-verify="" data-type="sysDict" data-title="${column.valueSetString}"></select>
                 #else
                 <input type="${column.pageType}" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end

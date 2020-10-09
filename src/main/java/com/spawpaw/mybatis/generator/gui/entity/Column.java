@@ -66,6 +66,7 @@ public class Column extends ConfigMatcher {
     public final String pageType;
     public final String whoColumn;// 是否是who column
     public Set<String> valueSet = new LinkedHashSet<>();
+    public String valueSetString;
     // add by jason end
     public final String getterName;//该字段在entity中的getter名称
     public final String setterName;//该字段在entity中的setter名称
@@ -111,7 +112,8 @@ public class Column extends ConfigMatcher {
         showInAdd = TableColumnMetaDataCache.needShowInAdd(globalColumnCacheKey).toString();
         pageType = TableColumnMetaDataCache.getPageType(globalColumnCacheKey);
         remarks = introspectedColumn.getRemarks();
-        if ("radio".equals(pageType) || "select".equals(pageType) || "checkbox".equals(pageType)) {
+        if ("radio".equals(pageType) || "select".equals(pageType)
+                || "select-dict".equals(pageType) || "checkbox".equals(pageType)) {
             remarks = RegexpUtil.parseValueSet(getRemarks(), valueSet);
         }
         getterName = JavaBeansUtil.getGetterMethodName(field.getName(), field.getType());
@@ -188,6 +190,17 @@ public class Column extends ConfigMatcher {
             return "text";
         }
         return pageType;
+    }
+
+    public String getValueSetString() {
+        StringBuilder sb = new StringBuilder();
+        if (valueSet != null) {
+            valueSet.stream().forEach(val -> {
+                sb.append(val).append(",");
+            });
+        }
+        String result = sb.substring(0, sb.length() - 1);
+        return result;
     }
 
     public String getShowInList() {

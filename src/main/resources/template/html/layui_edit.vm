@@ -66,6 +66,8 @@
                             <option value="${optionItem}">${optionItem}</option>
                         #end
                     </select>
+                #elseif(${column.pageType} == "select-dict")
+                    <select name="${column.fieldName}" lay-verify=""></select>
                 #else
                 <input type="${column.pageType}" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end
@@ -114,6 +116,11 @@
             });
             return false;
         });
+        #foreach($column in $table.columns)
+            #if (${column.pageType} == "select-dict")
+                sys_renderDictValue('${column.valueSetString}', $('select[name="${column.fieldName}"]'));
+            #end
+        #end
         var id = sys_getParam('id');
         $.ajax({
             url: '../../../api/${table.entityLowerCamel}/queryById/' + id,
