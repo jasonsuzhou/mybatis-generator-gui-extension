@@ -95,24 +95,17 @@
         var form = layui.form;
 
         form.on('submit(${table.entityLowerCamel}Add-filter)', function (data) {
-            $.post(action, data.field, function (res) {
-                if (res.code === 0) {
-                    if (parent.layer == undefined) {
-                        layer.msg("提交成功", {time: 1000}, function () {
-                            window.location.href = '${table.entityLowerCamel}List.html';
-                        });
-                    } else {
-                        layer.msg("提交成功", {time: 1000}, function () {
-                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                            parent.layer.close(index);
-                            parent.$('#btnRefresh').click();
-                        });
-                    }
+            sys_doAjaxPostWithForm(action, data.field, function(obj) {
+                if (parent.layer == undefined) {
+                    layer.msg("提交成功", {time: 1000}, function () {
+                        window.location.href = '${table.entityLowerCamel}List.html';
+                    });
                 } else {
-                    if (res != '' && res.msg.startsWith('Per')) {
-                        parent.window.location.href = '../../login.html';
-                    }
-                    layer.alert(res.msg,{title:'出错了',icon:2});
+                    layer.msg("提交成功", {time: 1000}, function () {
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index);
+                        parent.$('#btnRefresh').click();
+                    });
                 }
             });
             return false;
