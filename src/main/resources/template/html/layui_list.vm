@@ -46,7 +46,7 @@
                                     #end
                                 </select>
                             #elseif(${column.pageType} == "select-dict")
-                                <select name="${column.fieldName}" lay-verify="" data-type="sysDict" data-title="$column.valueSet"></select>
+                                <select name="${column.fieldName}" lay-verify="" data-type="sysDict" data-title="$column.valueSetString"></select>
                             #else
                                 <input type="text" name="${column.fieldName}" id="${column.fieldName}" class="layui-input">
                             #end
