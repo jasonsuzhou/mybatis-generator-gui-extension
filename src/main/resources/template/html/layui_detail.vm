@@ -62,6 +62,8 @@
                 #foreach($column in $table.columns)
                     #if (${column.fieldName} == "id")
                     var idColumn = {"label":"主键","value":record.id};
+                    #elseif(${column.pageType} == "select-dict")
+                    var ${column.fieldName}Column = {"label":"${column.remarks}","value":record.${column.fieldName}+':'+sys_getDictValue('$column.valueSetString',record.${column.fieldName})};
                     #else
                     var ${column.fieldName}Column = {"label":"${column.remarks}","value":record.${column.fieldName}};
                     #end
