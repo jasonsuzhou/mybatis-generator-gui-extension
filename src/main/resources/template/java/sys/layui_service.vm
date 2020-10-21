@@ -1,0 +1,171 @@
+package ${table.basePackage}.b.modules.system.service;
+
+import ${table.basePackage}.b.modules.system.domain.User;
+import ${table.basePackage}.b.modules.system.entity.${table.entityObjName};
+import ${table.basePackage}.b.modules.system.entity.${table.exampleObjName};
+import ${table.basePackage}.c.common.vo.APIResponse;
+import ${table.basePackage}.c.common.vo.CommonResponse;
+import ${table.daoPackage}.${table.daoObjName};
+import ${table.basePackage}.service.exception.ServiceException;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@Service
+public class ${table.entityObjName}Service {
+
+    @Autowired
+    ${table.daoObjName} ${table.entityLowerCamel}Mapper;
+
+    public CommonResponse<${table.entityObjName}> findByPage(${table.entityObjName} ${table.entityLowerCamel},int pageIndex, int perPage) {
+        ${table.exampleObjName} example = new ${table.exampleObjName}();
+        generateCriteria(${table.entityLowerCamel}, example);
+        int offset = (pageIndex - 1) * perPage;
+        example.setOffset(offset);
+        example.setLimit(perPage);
+        long total = ${table.entityLowerCamel}Mapper.countByExample(example);
+        List<${table.entityObjName}> list = ${table.entityLowerCamel}Mapper.selectByExample(example);
+        return new CommonResponse<>(list).count(total);
+    }
+
+    public List<${table.entityObjName}> queryAll(${table.entityObjName} ${table.entityLowerCamel}) throws ServiceException {
+        int perPage = 5000;
+        ${table.exampleObjName} example = new ${table.exampleObjName}();
+        generateCriteria(${table.entityLowerCamel}, example);
+        Long total = ${table.entityLowerCamel}Mapper.countByExample(example);
+        if (total > Integer.MAX_VALUE) {
+            throw new ServiceException(ServiceException.CODE.DATA_ERROR, "数据量太大了");
+        }
+        int totalCount = total.intValue();
+        List<${table.entityObjName}> list = new ArrayList<${table.entityObjName}>(totalCount);
+        if (totalCount > perPage) {
+            int pageIndex = 1;
+            int totalPage = totalCount / perPage;
+            boolean hasRemainder = totalCount % perPage != 0;
+            if (hasRemainder) {
+                totalPage = totalPage + 1;
+            }
+            for (int i=0;i<totalPage;i++) {
+                int offset = (pageIndex - 1) * perPage;
+                example.setOffset(offset);
+                example.setLimit(perPage);
+                list.addAll(${table.entityLowerCamel}Mapper.selectByExample(example));
+                pageIndex ++;
+            }
+        } else {
+            list = ${table.entityLowerCamel}Mapper.selectByExample(example);
+        }
+        return list;
+    }
+
+    public Long countTotal(${table.entityObjName} ${table.entityLowerCamel}) {
+        ${table.exampleObjName} example = new ${table.exampleObjName}();
+        generateCriteria(${table.entityLowerCamel}, example);
+        return ${table.entityLowerCamel}Mapper.countByExample(example);
+    }
+
+    public APIResponse queryById(Long id) {
+        ${table.entityObjName} ${table.entityLowerCamel} = ${table.entityLowerCamel}Mapper.selectByPrimaryKey(id);
+        return new APIResponse().withData(${table.entityLowerCamel});
+    }
+
+    public APIResponse add(${table.entityObjName} ${table.entityLowerCamel}) {
+        String result = this.verifyAdd(${table.entityLowerCamel});
+        if (StringUtils.isNotBlank(result)) {
+            return new APIResponse(APIResponse.CODE.FAILED, result);
+        }
+        int affectRow = 0;
+        try {
+            affectRow = ${table.entityLowerCamel}Mapper.insert(${table.entityLowerCamel});
+        } catch (Throwable e) {
+            return new APIResponse(APIResponse.CODE.FAILED, e.getMessage());
+        }
+        return new APIResponse().withData(affectRow).withMsg("添加成功");
+    }
+
+    public APIResponse deleteById(Long id) {
+        String result = this.verifyDelete(id);
+        if (StringUtils.isNotBlank(result)) {
+            return new APIResponse(APIResponse.CODE.FAILED, result);
+        }
+        int affectRow = ${table.entityLowerCamel}Mapper.deleteByPrimaryKey(id);
+        return new APIResponse().withData(affectRow).withMsg("删除成功");
+    }
+
+    public APIResponse update(${table.entityObjName} ${table.entityLowerCamel}) {
+        String result = this.verifyUpdate(${table.entityLowerCamel});
+        if (StringUtils.isNotBlank(result)) {
+        return new APIResponse(APIResponse.CODE.FAILED, result);
+        }
+        int affectRow = ${table.entityLowerCamel}Mapper.updateByPrimaryKeySelective(${table.entityLowerCamel});
+        return new APIResponse().withData(affectRow).withMsg("更新成功");
+    }
+
+    private void generateCriteria(${table.entityObjName} ${table.entityLowerCamel}, ${table.exampleObjName} example) {
+        // TODO add more condition
+        ${table.exampleObjName}.Criteria criteria = example.createCriteria();
+#foreach($column in $table.columns)
+    #if (${column.searched} == "true")
+        if (StringUtils.isNotBlank(${table.entityLowerCamel}.${column.getterName}())) {
+            criteria.and${column.fieldNameUpperCamel}EqualTo(${table.entityLowerCamel}.${column.getterName}());
+        }
+    #end
+#end
+        //========================
+    }
+
+    private String verifyAdd(${table.entityObjName} ${table.entityLowerCamel}) {
+        // TODO
+#foreach($column in $table.columns)
+    #if (${column.whoColumn} == "true")
+    Subject subject = SecurityUtils.getSubject();
+    User user = (User)subject.getPrincipal();
+        #break
+    #end
+#end
+#foreach($column in $table.columns)
+    #if (${column.whoColumn} == "true")
+        #if(${column.fieldName.indexOf("By")} != -1 && ${column.fieldName.indexOf("cre")} != -1)
+            ${table.entityLowerCamel}.${column.setterName}(user.getUsername());
+        #elseif(${column.fieldName.indexOf("Date")} != -1 && ${column.fieldName.indexOf("cre")} != -1)
+            ${table.entityLowerCamel}.${column.setterName}(new Date());
+        #end
+    #end
+#end
+        return null;
+    }
+
+    private String verifyDelete(Long id) {
+        // TODO
+        return null;
+    }
+
+    private String verifyUpdate(${table.entityObjName} ${table.entityLowerCamel}) {
+        // TODO
+#foreach($column in $table.columns)
+    #if (${column.whoColumn} == "true")
+    Subject subject = SecurityUtils.getSubject();
+    User user = (User)subject.getPrincipal();
+        #break
+    #end
+#end
+#foreach($column in $table.columns)
+    #if (${column.whoColumn} == "true")
+        #if(${column.fieldName.indexOf("By")} != -1 && ${column.fieldName.indexOf("up")} != -1)
+            ${table.entityLowerCamel}.${column.setterName}(user.getUsername());
+        #elseif(${column.fieldName.indexOf("Date")} != -1 && ${column.fieldName.indexOf("up")} != -1)
+            ${table.entityLowerCamel}.${column.setterName}(new Date());
+        #end
+    #end
+#end
+        return null;
+    }
+
+}

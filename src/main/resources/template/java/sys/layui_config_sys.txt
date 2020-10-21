@@ -1,0 +1,44 @@
+templateConfig:
+
+  # REST-ful Controller
+  - template: java/sys/layui_controller.vm
+    destDir: src/main/java
+    destPackage: ${basePackage}.a.base.system..controller
+    destFileName: ${entityName}Controller.java
+
+  # Interface VO
+  - template: java/sys/layui_controller_vo.vm
+    destDir: src/main/java
+    destPackage: ${basePackage}.a.base.system.vo
+    destFileName: ${entityName}VO.java
+
+  # Service
+  - template: java/sys/layui_service.vm
+    destDir: src/main/java
+    destPackage: ${basePackage}.b.modules.system.service
+    destFileName: ${entityName}Service.java
+
+  # List Html Page
+  - template: html/layui_list.vm
+    destDir: src/main/resources
+    destPackage: static.html.admin.${entityLowerCamel}
+    destFileName: ${entityLowerCamel}List.html
+
+  # Add Html Page
+  - template: html/layui_add.vm
+    destDir: src/main/resources
+    destPackage: static.html.admin.${entityLowerCamel}
+    destFileName: ${entityLowerCamel}Add.html
+
+  # Edit Html Page
+  - template: html/layui_edit.vm
+    destDir: src/main/resources
+    destPackage: static.html.admin.${entityLowerCamel}
+    destFileName: ${entityLowerCamel}Edit.html
+
+
+  # Detail Html Page
+  - template: html/layui_detail.vm
+    destDir: src/main/resources
+    destPackage: static.html.admin.${entityLowerCamel}
+    destFileName: ${entityLowerCamel}Detail.html

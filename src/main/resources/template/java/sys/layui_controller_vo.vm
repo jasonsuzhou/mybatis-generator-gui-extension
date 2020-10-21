@@ -1,0 +1,48 @@
+package ${table.basePackage}.a.base.system.vo;
+
+import com.alibaba.fastjson.JSON;
+import ${table.basePackage}.b.modules.system.entity.${table.entityName};
+import org.springframework.beans.BeanUtils;
+
+public class ${table.entityName}VO {
+
+#foreach($column in $table.columns)
+    private $column.fieldType ${column.fieldName};
+#end
+
+    public ${table.entityName}VO(){}
+
+    public ${table.entityName}VO(${table.entityName} ${table.entityLowerCamel}) {
+        BeanUtils.copyProperties(${table.entityLowerCamel}, this);
+    }
+
+    public String[] genExportArray() {
+        return new String[]{
+            #foreach($column in $table.columns)
+                #if (${column.fieldName} == "id")
+                    String.valueOf(${column.fieldName})
+                #else
+                    ,String.valueOf(${column.fieldName})
+                #end
+            #end
+            };
+    }
+
+    public String genJSONString() {
+        return JSON.toJSONString(this);
+    }
+
+#foreach($column in $table.columns)
+    public $column.fieldType ${column.getterName}(){
+        return this.${column.fieldName};
+    }
+#end
+
+#foreach($column in $table.columns)
+    public void ${column.setterName}($column.fieldType ${column.fieldName}){
+        this.${column.fieldName} = ${column.fieldName};
+    }
+#end
+
+}
+
