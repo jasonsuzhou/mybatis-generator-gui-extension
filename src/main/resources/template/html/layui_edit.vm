@@ -41,6 +41,8 @@
                             <option value="${optionItem}">${optionItem}</option>
                         #end
                     </select>
+                #elseif(${column.pageType} == "select-dict")
+                    <select lay-verify="required" name="${column.fieldName}"></select>
                 #else
                 <input type="${column.pageType}" lay-verify="required" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end
