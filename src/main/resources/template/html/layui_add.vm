@@ -19,6 +19,8 @@
 
         #elseif (${column.whoColumn} == "true")
 
+        #elseif (${column.showInAdd} == "false")
+
         #else
         <div class="layui-form-item">
             #if (${column.required} == "true")

@@ -207,6 +207,10 @@ public class Column extends ConfigMatcher {
         return showInList;
     }
 
+    public String getShowInAdd() {
+        return showInAdd;
+    }
+
     public String getEditable() {
         return editable;
     }
