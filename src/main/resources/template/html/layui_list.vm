@@ -147,8 +147,8 @@
             ]]
             , page: true
             , done: function (res) {
-                if (res != '' && res.msg.startsWith('Per')) {
-                    parent.window.location.href = '../../login.html';
+                if (res.status === 401 || res.code === 401) {
+                    sys_gotoLoginPage();
                 }
             }
         });

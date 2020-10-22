@@ -10,6 +10,7 @@
     <script type="text/javascript" src="../../../layui/layui.js" charset="utf-8"></script>
 </head>
 <body>
+<div class="layui-fluid">
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>修改${table.remarks}</legend>
 </fieldset>
@@ -86,10 +87,11 @@
         </div>
     </div>
 </form>
+</div>
 </body>
 <script type="text/javascript" src="/js/system.js" charset="utf-8"></script>
 <script>
-    layui.use(['form', 'layedit'], function () {
+    layui.use(['form', 'layedit','laydate'], function () {
         var form = layui.form
                 , layer = layui.layer
                 , $ = layui.$

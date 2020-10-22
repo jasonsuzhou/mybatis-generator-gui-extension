@@ -10,6 +10,7 @@
     <script type="text/javascript" src="../../../layui/layui.js" charset="utf-8"></script>
 </head>
 <body>
+<div class="layui-fluid">
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>添加${table.remarks}</legend>
 </fieldset>
@@ -88,11 +89,12 @@
         </div>
     </div>
 </form>
+</div>
 </body>
 <script type="text/javascript" src="/js/system.js" charset="utf-8"></script>
 <script>
     var action = "../../../api/${table.entityLowerCamel}/add";
-    layui.use('form', function () {
+    layui.use(['form','laydate'], function () {
         var $ = layui.$;
         var form = layui.form;
 
