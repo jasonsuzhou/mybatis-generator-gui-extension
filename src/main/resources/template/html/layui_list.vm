@@ -47,6 +47,8 @@
                                 </select>
                             #elseif(${column.pageType} == "select-dict")
                                 <select name="${column.fieldName}" lay-verify="" data-type="sysDict" data-title="$column.valueSetString"></select>
+                            #elseif(${column.pageType} == "radio-dict")
+                                <select name="${column.fieldName}" lay-verify="" data-type="sysDict" data-title="$column.valueSetString"></select>
                             #else
                                 <input type="text" name="${column.fieldName}" id="${column.fieldName}" class="layui-input">
                             #end
@@ -136,6 +138,8 @@
                     #if(${column.whoColumn} == "true" && $column.fieldType.indexOf('Date') != -1)
                     , {field: '${column.fieldName}', title: '${column.remarks}',sort:true, align: 'left',templet : '<div>{{!d.${column.fieldName}? "" : layui.util.toDateString(d.${column.fieldName}, "yyyy-MM-dd HH:mm:ss")}}</div>'}
                     #elseif(${column.pageType} == "select-dict")
+                    , {field: '${column.fieldName}', title: '${column.remarks}', sort: true, align: 'left', templet:"<div>{{sys_getDictValue('${column.valueSetString}',d.${column.fieldName})}}</div>"}
+                    #elseif(${column.pageType} == "radio-dict")
                     , {field: '${column.fieldName}', title: '${column.remarks}', sort: true, align: 'left', templet:"<div>{{sys_getDictValue('${column.valueSetString}',d.${column.fieldName})}}</div>"}
                     #else
                     , {field: '${column.fieldName}', title: '${column.remarks}',sort:true, align: 'left'}

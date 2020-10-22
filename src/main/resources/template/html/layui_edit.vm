@@ -56,6 +56,8 @@
                     #foreach($optionItem in $column.valueSet)
                         <input type="radio" name="${column.fieldName}" value="${optionItem}" title="${optionItem}">
                     #end
+                #elseif(${column.pageType} == "radio-dict")
+                    <span id="${column.fieldName}View" data-type="sysDictFromEdit" data-title="${column.valueSetString}" data-url="${column.fieldName}"></span>
                 #elseif(${column.pageType} == "select")
                     <select name="${column.fieldName}" lay-verify="">
                         <option value=""></option>
@@ -72,6 +74,8 @@
                     </select>
                 #elseif(${column.pageType} == "select-dict")
                     <select name="${column.fieldName}" lay-verify=""></select>
+                #elseif(${column.pageType} == "date")
+                    <input type="text" name="${column.fieldName}" id="${column.fieldName}" autocomplete="off" class="layui-input">
                 #else
                 <input type="${column.pageType}" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end
@@ -91,10 +95,12 @@
 </body>
 <script type="text/javascript" src="/js/system.js" charset="utf-8"></script>
 <script>
-    layui.use(['form', 'layedit','laydate'], function () {
+    layui.use(['form', 'layedit','laydate','util'], function () {
         var form = layui.form
                 , layer = layui.layer
                 , $ = layui.$
+                , util = layui.util
+                , laydate = layui.laydate;
         //监听提交
         form.on('submit(${table.entityLowerCamel}Edit-filter)', function (data) {
             var jsonData = JSON.stringify(data.field);
@@ -110,6 +116,10 @@
         #foreach($column in $table.columns)
             #if (${column.pageType} == "select-dict")
                 sys_renderDictValue('${column.valueSetString}', $('select[name="${column.fieldName}"]'));
+            #elseif (${column.pageType} == "date")
+                laydate.render({
+                    elem:'#${column.fieldName}'
+                });
             #end
         #end
         var id = sys_getParam('id');
@@ -121,7 +131,13 @@
                     #if (${column.fieldName} == "id")
                         "id": record.id
                     #else
+                        #if (${column.pageType} == "date")
+                        , "${column.fieldName}": util.toDateString(record.${column.fieldName}, 'yyyy-MM-dd')
+                        #elseif (${column.pageType} == "radio-dict")
+                        , "${column.fieldName}": record.${column.fieldName}.toString()
+                        #else
                         , "${column.fieldName}": record.${column.fieldName}
+                        #end
                     #end
                 #end
                 });

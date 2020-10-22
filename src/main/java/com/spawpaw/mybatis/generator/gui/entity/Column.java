@@ -113,7 +113,8 @@ public class Column extends ConfigMatcher {
         pageType = TableColumnMetaDataCache.getPageType(globalColumnCacheKey);
         remarks = introspectedColumn.getRemarks();
         if ("radio".equals(pageType) || "select".equals(pageType)
-                || "select-dict".equals(pageType) || "checkbox".equals(pageType)) {
+                || "select-dict".equals(pageType) || "checkbox".equals(pageType)
+                || "radio-dict".equals(pageType) || "checkbox-dict".equals(pageType)) {
             remarks = RegexpUtil.parseValueSet(getRemarks(), valueSet);
         }
         getterName = JavaBeansUtil.getGetterMethodName(field.getName(), field.getType());
