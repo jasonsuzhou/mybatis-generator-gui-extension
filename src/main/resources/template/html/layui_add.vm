@@ -5,9 +5,9 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="../../../layui/css/layui.css">
-    <link rel="stylesheet" href="../../../css/main.css">
-    <script type="text/javascript" src="../../../layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <script type="text/javascript" src="/layui/layui.js" charset="utf-8"></script>
 </head>
 <body>
 <div class="layui-fluid">
@@ -51,6 +51,8 @@
                     <span id="${column.fieldName}View" data-type="sysDict" data-title="${column.valueSetString}" data-url="${column.fieldName}"></span>
                 #elseif(${column.pageType} == "date")
                     <input type="text" name="${column.fieldName}" autocomplete="off" class="layui-input" id="${column.fieldName}" lay-verify="required">
+                #elseif(${column.pageType} == "textarea")
+                    <textarea name="${column.fieldName}" class="layui-textarea" lay-verify="required"></textarea>
                 #else
                 <input type="${column.pageType}" lay-verify="required" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end
@@ -82,6 +84,8 @@
                     <span id="${column.fieldName}View" data-type="sysDict" data-title="${column.valueSetString}" data-url="${column.fieldName}"></span>
                 #elseif(${column.pageType} == "date")
                     <input type="text" name="${column.fieldName}" autocomplete="off" class="layui-input" id="${column.fieldName}">
+                #elseif(${column.pageType} == "textarea")
+                    <textarea name="${column.fieldName}" class="layui-textarea"></textarea>
                 #else
                 <input type="${column.pageType}" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end
@@ -101,7 +105,7 @@
 </body>
 <script type="text/javascript" src="/js/system.js" charset="utf-8"></script>
 <script>
-    var action = "../../../api/${table.entityLowerCamel}/add";
+    var action = "/api/${table.entityLowerCamel}/add";
     layui.use(['form','laydate'], function () {
         var $ = layui.$;
         var form = layui.form

@@ -133,7 +133,7 @@
                 {type: 'checkbox', fixed: 'left'}
             #foreach($column in $table.columns)
                 #if (${column.fieldName} == "id")
-                    , {field: 'id', title: '主键', sort:true, align: 'lef',event: 'showDetail'}
+                    , {field: 'id', title: '主键', sort:true, align: 'left',event: 'showDetail'}
                 #elseif (${column.showInList} == "true")
                     #if(${column.whoColumn} == "true" && $column.fieldType.indexOf('Date') != -1)
                     , {field: '${column.fieldName}', title: '${column.remarks}',sort:true, align: 'left',templet : '<div>{{!d.${column.fieldName}? "" : layui.util.toDateString(d.${column.fieldName}, "yyyy-MM-dd HH:mm:ss")}}</div>'}

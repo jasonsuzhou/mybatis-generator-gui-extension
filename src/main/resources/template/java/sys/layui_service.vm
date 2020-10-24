@@ -8,8 +8,6 @@ import ${table.basePackage}.c.common.vo.CommonResponse;
 import ${table.daoPackage}.${table.daoObjName};
 import ${table.basePackage}.service.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +21,8 @@ public class ${table.entityObjName}Service {
 
     @Autowired
     ${table.daoObjName} ${table.entityLowerCamel}Mapper;
+    @Autowired
+    SysUserService sysUserService;
 
     public CommonResponse<${table.entityObjName}> findByPage(${table.entityObjName} ${table.entityLowerCamel},int pageIndex, int perPage) {
         ${table.exampleObjName} example = new ${table.exampleObjName}();
@@ -125,8 +125,7 @@ public class ${table.entityObjName}Service {
         // TODO
 #foreach($column in $table.columns)
     #if (${column.whoColumn} == "true")
-    Subject subject = SecurityUtils.getSubject();
-    User user = (User)subject.getPrincipal();
+    User user = sysUserService.getCurrentLoginUser();
         #break
     #end
 #end
@@ -151,8 +150,7 @@ public class ${table.entityObjName}Service {
         // TODO
 #foreach($column in $table.columns)
     #if (${column.whoColumn} == "true")
-    Subject subject = SecurityUtils.getSubject();
-    User user = (User)subject.getPrincipal();
+    User user = sysUserService.getCurrentLoginUser();
         #break
     #end
 #end
