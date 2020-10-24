@@ -95,7 +95,7 @@
     var exportUrl = "../../../api/${table.entityLowerCamel}/export";
     var tableName = '${table.entityLowerCamel}-table';
     var $;
-    layui.use('table', function () {
+    layui.use(['table','form'], function () {
         $ = layui.$;
         var table = layui.table;
         var form = layui.form;
