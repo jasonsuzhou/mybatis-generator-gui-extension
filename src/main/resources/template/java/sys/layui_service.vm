@@ -3,6 +3,7 @@ package ${table.basePackage}.b.modules.system.service;
 import ${table.basePackage}.b.modules.system.domain.User;
 import ${table.basePackage}.b.modules.system.entity.${table.entityObjName};
 import ${table.basePackage}.b.modules.system.entity.${table.exampleObjName};
+import ${table.basePackage}.c.common.enums.EnumAPIResponse;
 import ${table.basePackage}.c.common.vo.APIResponse;
 import ${table.basePackage}.c.common.vo.CommonResponse;
 import ${table.daoPackage}.${table.daoObjName};

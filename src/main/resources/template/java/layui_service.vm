@@ -1,5 +1,6 @@
 package ${table.basePackage}.service;
 
+import ${table.basePackage}.c.common.enums.EnumAPIResponse;
 import ${table.basePackage}.common.APIResponse;
 import ${table.basePackage}.common.CommonResponse;
 import ${table.basePackage}.core.domain.User;
