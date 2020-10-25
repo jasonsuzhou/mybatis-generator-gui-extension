@@ -41,7 +41,7 @@ ${table.daoObjName} ${table.entityLowerCamel}Mapper;
         generateCriteria(${table.entityLowerCamel}, example);
         Long total = ${table.entityLowerCamel}Mapper.countByExample(example);
         if (total > Integer.MAX_VALUE) {
-            throw new ServiceException(ServiceException.CODE.DATA_ERROR, "数据量太大了");
+            throw new ServiceException(EnumAPIResponse.FAILED.getCode(), "数据量太大了");
         }
         int totalCount = total.intValue();
         List<${table.entityObjName}> list = new ArrayList<${table.entityObjName}>(totalCount);
@@ -79,13 +79,13 @@ ${table.daoObjName} ${table.entityLowerCamel}Mapper;
     public APIResponse add(${table.entityObjName} ${table.entityLowerCamel}) {
         String result = this.verifyAdd(${table.entityLowerCamel});
         if (StringUtils.isNotBlank(result)) {
-            return new APIResponse(APIResponse.CODE.FAILED, result);
+            return new APIResponse(EnumAPIResponse.FAILED.getCode(), result);
         }
         int affectRow = 0;
         try {
             affectRow = ${table.entityLowerCamel}Mapper.insert(${table.entityLowerCamel});
         } catch (Throwable e) {
-            return new APIResponse(APIResponse.CODE.FAILED, e.getMessage());
+            return new APIResponse(EnumAPIResponse.FAILED.getCode(), e.getMessage());
         }
         return new APIResponse().withData(affectRow).withMsg("添加成功");
     }
@@ -93,7 +93,7 @@ ${table.daoObjName} ${table.entityLowerCamel}Mapper;
     public APIResponse deleteById(Long id) {
         String result = this.verifyDelete(id);
         if (StringUtils.isNotBlank(result)) {
-            return new APIResponse(APIResponse.CODE.FAILED, result);
+            return new APIResponse(EnumAPIResponse.FAILED.getCode(), result);
         }
         int affectRow = ${table.entityLowerCamel}Mapper.deleteByPrimaryKey(id);
         return new APIResponse().withData(affectRow).withMsg("删除成功");
@@ -102,7 +102,7 @@ ${table.daoObjName} ${table.entityLowerCamel}Mapper;
     public APIResponse update(${table.entityObjName} ${table.entityLowerCamel}) {
         String result = this.verifyUpdate(${table.entityLowerCamel});
         if (StringUtils.isNotBlank(result)) {
-        return new APIResponse(APIResponse.CODE.FAILED, result);
+        return new APIResponse(EnumAPIResponse.FAILED.getCode(), result);
         }
         int affectRow = ${table.entityLowerCamel}Mapper.updateByPrimaryKeySelective(${table.entityLowerCamel});
         return new APIResponse().withData(affectRow).withMsg("更新成功");
