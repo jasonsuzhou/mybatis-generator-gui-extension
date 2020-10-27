@@ -36,10 +36,11 @@ public class ${table.entityName}Controller{
 
     @AdminLimit
     @PostMapping("findByPage")
-    public CommonResponse<${table.entityName}> findByPage(${table.entityName} ${table.entityLowerCamel},
+    public APIResponse findByPage(${table.entityName} ${table.entityLowerCamel},
                                 @RequestParam("page") int pageIndex,
                                 @RequestParam("limit") int perPage) {
-        return ${table.entityLowerCamel}Service.findByPage(${table.entityLowerCamel},pageIndex,perPage);
+        CommonResponse<${table.entityName}> list = ${table.entityLowerCamel}Service.findByPage(${table.entityLowerCamel},pageIndex,perPage);
+        return APIResponse.buildSuccess().withData(list.getData()).withCount(list.getCount());
     }
 
     @AdminLimit
