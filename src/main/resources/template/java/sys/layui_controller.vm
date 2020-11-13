@@ -4,7 +4,6 @@ import ${table.basePackage}.a.base.system.vo.${table.entityName}VO;
 import ${table.basePackage}.b.modules.system.entity.${table.entityObjName};
 import ${table.basePackage}.b.modules.system.service.${table.entityName}Service;
 import ${table.basePackage}.c.common.vo.APIResponse;
-import ${table.basePackage}.c.common.vo.CommonResponse;
 import ${table.basePackage}.c.common.util.WebUtils;
 import ${table.basePackage}.intf.exception.RestfulRequestException;
 import ${table.basePackage}.intf.interceptor.AdminLimit;
@@ -39,7 +38,7 @@ public class ${table.entityName}Controller{
     public APIResponse findByPage(${table.entityName} ${table.entityLowerCamel},
                                 @RequestParam("page") int pageIndex,
                                 @RequestParam("limit") int perPage) {
-        CommonResponse<${table.entityName}> list = ${table.entityLowerCamel}Service.findByPage(${table.entityLowerCamel},pageIndex,perPage);
+        APIResponse<${table.entityName}> list = ${table.entityLowerCamel}Service.findByPage(${table.entityLowerCamel},pageIndex,perPage);
         return APIResponse.buildSuccess().withData(list.getData()).withCount(list.getCount());
     }
 
