@@ -3,9 +3,8 @@ package ${table.basePackage}.b.modules.system.service;
 import ${table.basePackage}.b.modules.system.domain.User;
 import ${table.basePackage}.b.modules.system.entity.${table.entityObjName};
 import ${table.basePackage}.b.modules.system.entity.${table.exampleObjName};
-import ${table.basePackage}.c.common.enums.EnumAPIResponse;
+import ${table.basePackage}.c.common.enums.APIResponseCodeEnum;
 import ${table.basePackage}.c.common.vo.APIResponse;
-import ${table.basePackage}.c.common.vo.CommonResponse;
 import ${table.daoPackage}.${table.daoObjName};
 import ${table.basePackage}.service.exception.ServiceException;
 import org.apache.commons.lang3.StringUtils;
@@ -28,7 +27,7 @@ public class ${table.entityObjName}Service {
     @Autowired
     SysUserService sysUserService;
 
-    public CommonResponse<${table.entityObjName}> findByPage(${table.entityObjName} ${table.entityLowerCamel},int pageIndex, int perPage) {
+    public APIResponse<${table.entityObjName}> findByPage(${table.entityObjName} ${table.entityLowerCamel},int pageIndex, int perPage) {
         ${table.exampleObjName} example = new ${table.exampleObjName}();
         generateCriteria(${table.entityLowerCamel}, example);
         int offset = (pageIndex - 1) * perPage;
@@ -36,7 +35,7 @@ public class ${table.entityObjName}Service {
         example.setLimit(perPage);
         long total = ${table.entityLowerCamel}Mapper.countByExample(example);
         List<${table.entityObjName}> list = ${table.entityLowerCamel}Mapper.selectByExample(example);
-        return new CommonResponse<>(list).count(total);
+        return APIResponse.buildSuccess().withData(list).withCount(total);
     }
 
     public List<${table.entityObjName}> queryAll(${table.entityObjName} ${table.entityLowerCamel}) throws ServiceException {
@@ -77,39 +76,39 @@ public class ${table.entityObjName}Service {
 
     public APIResponse queryById(Long id) {
         ${table.entityObjName} ${table.entityLowerCamel} = ${table.entityLowerCamel}Mapper.selectByPrimaryKey(id);
-        return new APIResponse().withData(${table.entityLowerCamel});
+        return APIResponse.buildSuccess().withData(${table.entityLowerCamel});
     }
 
     public APIResponse add(${table.entityObjName} ${table.entityLowerCamel}) {
         String result = this.verifyAdd(${table.entityLowerCamel});
         if (StringUtils.isNotBlank(result)) {
-            return new APIResponse(EnumAPIResponse.FAILED.getCode(), result);
+            return APIResponse.buildError(result);
         }
         int affectRow = 0;
         try {
             affectRow = ${table.entityLowerCamel}Mapper.insert(${table.entityLowerCamel});
         } catch (Throwable e) {
-            return new APIResponse(EnumAPIResponse.FAILED.getCode(), e.getMessage());
+            return APIResponse.buildError(e.getMessage());
         }
-        return new APIResponse().withData(affectRow).withMsg("添加成功");
+        return APIResponse.buildSuccess().withData(affectRow).withMsg("添加成功");
     }
 
     public APIResponse deleteById(Long id) {
         String result = this.verifyDelete(id);
         if (StringUtils.isNotBlank(result)) {
-            return new APIResponse(EnumAPIResponse.FAILED.getCode(), result);
+            return APIResponse.buildError(result);
         }
         int affectRow = ${table.entityLowerCamel}Mapper.deleteByPrimaryKey(id);
-        return new APIResponse().withData(affectRow).withMsg("删除成功");
+        return APIResponse.buildSuccess().withData(affectRow).withMsg("删除成功");
     }
 
     public APIResponse update(${table.entityObjName} ${table.entityLowerCamel}) {
         String result = this.verifyUpdate(${table.entityLowerCamel});
         if (StringUtils.isNotBlank(result)) {
-        return new APIResponse(EnumAPIResponse.FAILED.getCode(), result);
+            return APIResponse.buildError(result);
         }
         int affectRow = ${table.entityLowerCamel}Mapper.updateByPrimaryKeySelective(${table.entityLowerCamel});
-        return new APIResponse().withData(affectRow).withMsg("更新成功");
+        return APIResponse.buildSuccess().withData(affectRow).withMsg("更新成功");
     }
 
     private void generateCriteria(${table.entityObjName} ${table.entityLowerCamel}, ${table.exampleObjName} example) {
