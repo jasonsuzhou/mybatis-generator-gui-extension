@@ -49,6 +49,16 @@
                                 <select name="${column.fieldName}" lay-verify="" data-type="sysDict" data-title="$column.valueSetString"></select>
                             #elseif(${column.pageType} == "radio-dict")
                                 <select name="${column.fieldName}" lay-verify="" data-type="sysDict" data-title="$column.valueSetString"></select>
+                            #elseif(${column.pageType} == "date")
+                                <input type="text" name="${column.fieldName}" id="${column.fieldName}" class="layui-input" placeholder="yyyy-MM-dd">
+                                <script>
+                                    layui.use('laydate',function(){
+                                        var laydate = layui.laydate;
+                                        laydate.render({
+                                            elem: '#${column.fieldName}'
+                                        });
+                                    });
+                                </script>
                             #else
                                 <input type="text" name="${column.fieldName}" id="${column.fieldName}" class="layui-input">
                             #end
