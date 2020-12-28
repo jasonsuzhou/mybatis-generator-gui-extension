@@ -59,6 +59,17 @@
                                         });
                                     });
                                 </script>
+                            #elseif(${column.pageType} == "datetime")
+                                <input type="text" name="${column.fieldName}" id="${column.fieldName}" class="layui-input" placeholder="yyyy-MM-dd HH:mm:ss">
+                                <script>
+                                    layui.use('laydate',function(){
+                                        var laydate = layui.laydate;
+                                        laydate.render({
+                                            elem: '#${column.fieldName}'
+                                            ,type: 'datetime'
+                                        });
+                                    });
+                                </script>
                             #else
                                 <input type="text" name="${column.fieldName}" id="${column.fieldName}" class="layui-input">
                             #end
