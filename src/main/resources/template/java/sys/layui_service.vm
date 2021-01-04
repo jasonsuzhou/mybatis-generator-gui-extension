@@ -74,9 +74,9 @@ public class ${table.entityObjName}Service {
         return ${table.entityLowerCamel}Mapper.countByExample(example);
     }
 
-    public APIResponse queryById(Long id) {
+    public ${table.entityObjName} queryById(Long id) {
         ${table.entityObjName} ${table.entityLowerCamel} = ${table.entityLowerCamel}Mapper.selectByPrimaryKey(id);
-        return APIResponse.buildSuccess().withData(${table.entityLowerCamel});
+        return ${table.entityLowerCamel};
     }
 
     public APIResponse add(${table.entityObjName} ${table.entityLowerCamel}) {

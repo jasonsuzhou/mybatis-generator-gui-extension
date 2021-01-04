@@ -45,7 +45,7 @@ public class ${table.entityName}Controller{
     @AdminLimit
     @GetMapping("queryById/{id}")
     public APIResponse queryById(@PathVariable("id") Long id) {
-        return  ${table.entityLowerCamel}Service.queryById(id);
+        return APIResponse.buildSuccess(${table.entityLowerCamel}Service.queryById(id));
     }
 
     @AdminLimit
