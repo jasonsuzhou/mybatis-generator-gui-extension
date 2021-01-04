@@ -7,7 +7,7 @@ import ${table.basePackage}.c.common.vo.APIResponse;
 import ${table.basePackage}.c.common.util.WebUtils;
 import ${table.basePackage}.intf.exception.RestfulRequestException;
 import ${table.basePackage}.intf.interceptor.AdminLimit;
-import ${table.basePackage}.service.exception.ServiceException;
+import ${table.basePackage}.c.common.exception.ServiceException;
 import liquibase.util.csv.CSVWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
