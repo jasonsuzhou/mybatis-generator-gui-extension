@@ -86,6 +86,8 @@
                     <input type="text" name="${column.fieldName}" id="${column.fieldName}" autocomplete="off" class="layui-input">
                 #elseif(${column.pageType} == "textarea")
                     <textarea name="${column.fieldName}" class="layui-textarea"></textarea>
+                #elseif(${column.pageType} == "textarea-wangEdit")
+                    <div id="${column.fieldName}"></div>
                 #else
                 <input type="${column.pageType}" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end
@@ -105,7 +107,22 @@
 </div>
 </body>
 <script type="text/javascript" src="/js/system.js" charset="utf-8"></script>
+#foreach($column in $table.columns)
+    #if(${column.pageType} == "textarea-wangEdit")
+    <script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
+    #end
+#end
 <script>
+        #foreach($column in $table.columns)
+            #if(${column.pageType} == "textarea-wangEdit")
+            const E = window.wangEditor
+            const editor = new E('#${column.fieldName}')
+            // 配置 server 接口地址
+            editor.config.uploadImgServer = '/api/sysFile/addSingleImageForWangEdit'
+            editor.config.uploadFileName = 'file'
+            editor.create()
+            #end
+        #end
     layui.use(['form', 'layedit','laydate','util'], function () {
         var form = layui.form
                 , layer = layui.layer
@@ -147,12 +164,18 @@
                         , "${column.fieldName}": util.toDateString(record.${column.fieldName}, 'yyyy-MM-dd')
                         #elseif (${column.pageType} == "radio-dict")
                         , "${column.fieldName}": record.${column.fieldName}.toString()
+                        #elseif(${column.pageType} == "textarea-wangEdit")
                         #else
                         , "${column.fieldName}": record.${column.fieldName}
                         #end
                     #end
                 #end
                 });
+                #foreach($column in $table.columns)
+                  #if(${column.pageType} == "textarea-wangEdit")
+                  editor.txt.html(record.${column.fieldName});
+                  #end
+                #end
         });
     });
 </script>

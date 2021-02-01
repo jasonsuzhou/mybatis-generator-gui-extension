@@ -86,6 +86,8 @@
                     <input type="text" name="${column.fieldName}" autocomplete="off" class="layui-input" id="${column.fieldName}">
                 #elseif(${column.pageType} == "textarea")
                     <textarea name="${column.fieldName}" class="layui-textarea"></textarea>
+                #elseif(${column.pageType} == "textarea-wangEdit")
+                    <div id="${column.fieldName}"></div>
                 #else
                 <input type="${column.pageType}" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end
@@ -104,7 +106,22 @@
 </div>
 </body>
 <script type="text/javascript" src="/js/system.js" charset="utf-8"></script>
+#foreach($column in $table.columns)
+  #if(${column.pageType} == "textarea-wangEdit")
+    <script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
+  #end
+#end
 <script>
+#foreach($column in $table.columns)
+ #if(${column.pageType} == "textarea-wangEdit")
+     const E = window.wangEditor
+     const editor = new E('#${column.fieldName}')
+     // 配置 server 接口地址
+     editor.config.uploadImgServer = '/api/sysFile/addSingleImageForWangEdit'
+     editor.config.uploadFileName = 'file'
+     editor.create()
+ #end
+#end
     var action = "/api/${table.entityLowerCamel}/add";
     layui.use(['form','laydate'], function () {
         var $ = layui.$;
