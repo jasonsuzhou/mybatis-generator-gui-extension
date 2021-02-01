@@ -16,6 +16,7 @@ import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +46,13 @@ public class ${table.entityName}Controller{
     @AdminLimit
     @GetMapping("queryById/{id}")
     public APIResponse queryById(@PathVariable("id") Long id) {
-        return APIResponse.buildSuccess(${table.entityLowerCamel}Service.queryById(id));
+        ${table.entityName} ${table.entityLowerCamel} = ${table.entityLowerCamel}Service.queryById(id);
+        #foreach($column in $table.columns)
+            #if(${column.pageType} == "textarea-wangEdit")
+                ${table.entityLowerCamel}.${column.setterName}(HtmlUtils.htmlUnescape(${table.entityLowerCamel}.${column.getterName}()));
+            #end
+        #end
+        return APIResponse.buildSuccess(${table.entityLowerCamel});
     }
 
     @AdminLimit
@@ -57,12 +64,22 @@ public class ${table.entityName}Controller{
     @AdminLimit
     @PostMapping("update")
     public APIResponse update(@RequestBody ${table.entityName} ${table.entityLowerCamel}) {
+        #foreach($column in $table.columns)
+            #if(${column.pageType} == "textarea-wangEdit")
+                ${table.entityLowerCamel}.${column.setterName}(HtmlUtils.htmlEscape(${table.entityLowerCamel}.${column.getterName}()));
+            #end
+        #end
         return ${table.entityLowerCamel}Service.update(${table.entityLowerCamel});
     }
 
     @AdminLimit
     @PostMapping("add")
     public APIResponse add(/*form data*/${table.entityName} ${table.entityLowerCamel}) {
+        #foreach($column in $table.columns)
+        #if(${column.pageType} == "textarea-wangEdit")
+        ${table.entityLowerCamel}.${column.setterName}(HtmlUtils.htmlEscape(${table.entityLowerCamel}.${column.getterName}()));
+        #end
+        #end
         return ${table.entityLowerCamel}Service.add(${table.entityLowerCamel});
     }
 
