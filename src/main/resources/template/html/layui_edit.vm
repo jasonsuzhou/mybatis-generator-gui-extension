@@ -16,7 +16,7 @@
             <div class="layui-card">
                 <div class="layui-card-header">修改${table.remarks}</div>
                 <div class="layui-card-body">
-<form class="layui-form" method="post" lay-filter="${table.entityLowerCamel}Edit-filter">
+<form class="layui-form" method="post" lay-filter="${table.entityLowerCamel}Edit-filter" id="${table.entityLowerCamel}EditForm">
     #foreach($column in $table.columns)
         #if (${column.fieldName} == "id")
             <input type="hidden" id="id" name="id">
@@ -53,6 +53,12 @@
                     <input type="text" name="${column.fieldName}" id="${column.fieldName}" lay-verify="required" class="layui-input">
                 #elseif(${column.pageType} == "textarea")
                     <textarea name="${column.fieldName}" class="layui-textarea" lay-verify="required"></textarea>
+                #elseif(${column.pageType} == "img")
+                    <div class="layui-input-block">
+                        <input type="file" name="${column.fieldName}File" id="${column.fieldName}">
+                        <div class="layui-upload-list" id="previewUploadSingleImage">
+                        </div>
+                    </div>
                 #else
                 <input type="${column.pageType}" lay-verify="required" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end
@@ -88,6 +94,13 @@
                     <textarea name="${column.fieldName}" class="layui-textarea"></textarea>
                 #elseif(${column.pageType} == "textarea-wangEdit")
                     <div id="${column.fieldName}"></div>
+                    <input type="hidden" name="${column.fieldName}">
+                #elseif(${column.pageType} == "img")
+                    <div class="layui-input-block">
+                        <input type="file" name="${column.fieldName}File" id="${column.fieldName}">
+                        <div class="layui-upload-list" id="previewUploadSingleImage">
+                        </div>
+                    </div>
                 #else
                 <input type="${column.pageType}" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end
@@ -123,6 +136,7 @@
             editor.create()
             #end
         #end
+    var action = "/api/${table.entityLowerCamel}/update";
     layui.use(['form', 'layedit','laydate','util'], function () {
         var form = layui.form
                 , layer = layui.layer
@@ -131,8 +145,14 @@
                 , laydate = layui.laydate;
         //监听提交
         form.on('submit(${table.entityLowerCamel}Edit-filter)', function (data) {
+            // sys_doAjaxPostWithFormFile(action, new FormData($('#${table.entityLowerCamel}EditForm')[0]));
+            #foreach($column in $table.columns)
+                #if(${column.pageType} == "textarea-wangEdit")
+                    $('input[name="${column.fieldName}"]').val(editor.txt.html());
+                #end
+            #end
             var jsonData = JSON.stringify(data.field);
-            sys_doAjaxPostWithJSON('/api/${table.entityLowerCamel}/update',jsonData,function (data) {
+            sys_doAjaxPostWithJSON(action,jsonData,function (data) {
                 layer.msg("修改成功", {time: 1000}, function (data) {
                     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                     parent.layer.close(index);
@@ -171,6 +191,11 @@
                     #end
                 #end
                 });
+                #foreach($column in $table.columns)
+                    #if(${column.pageType} == "img")
+                        $('#previewUploadSingleImage').append('<img src="' + record.${column.fieldName} + '" class="layui-upload-img">');
+                    #end
+                #end
                 #foreach($column in $table.columns)
                   #if(${column.pageType} == "textarea-wangEdit")
                   editor.txt.html(record.${column.fieldName});

@@ -14,7 +14,7 @@
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>添加${table.remarks}</legend>
 </fieldset>
-<form class="layui-form" method="post" lay-filter="${table.entityLowerCamel}Add-filter">
+<form class="layui-form" method="post" lay-filter="${table.entityLowerCamel}Add-filter" id="${table.entityLowerCamel}AddForm">
     #foreach($column in $table.columns)
         #if (${column.fieldName} == "id")
 
@@ -53,6 +53,12 @@
                     <input type="text" name="${column.fieldName}" autocomplete="off" class="layui-input" id="${column.fieldName}" lay-verify="required">
                 #elseif(${column.pageType} == "textarea")
                     <textarea name="${column.fieldName}" class="layui-textarea" lay-verify="required"></textarea>
+                #elseif(${column.pageType} == "img")
+                    <div class="layui-input-block">
+                        <input type="file" name="${column.fieldName}File" id="${column.fieldName}">
+                        <div class="layui-upload-list" id="previewUploadSingleImage">
+                        </div>
+                    </div>
                 #else
                 <input type="${column.pageType}" lay-verify="required" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end
@@ -88,6 +94,13 @@
                     <textarea name="${column.fieldName}" class="layui-textarea"></textarea>
                 #elseif(${column.pageType} == "textarea-wangEdit")
                     <div id="${column.fieldName}"></div>
+                    <input type="hidden" name="${column.fieldName}">
+                #elseif(${column.pageType} == "img")
+                    <div class="layui-input-block">
+                        <input type="file" name="${column.fieldName}File" id="${column.fieldName}">
+                        <div class="layui-upload-list" id="previewUploadSingleImage">
+                        </div>
+                    </div>
                 #else
                 <input type="${column.pageType}" name="${column.fieldName}" autocomplete="off" class="layui-input">
                 #end
@@ -123,10 +136,11 @@
  #end
 #end
     var action = "/api/${table.entityLowerCamel}/add";
-    layui.use(['form','laydate'], function () {
+    layui.use(['form','laydate','upload'], function () {
         var $ = layui.$;
         var form = layui.form
                 ,laydate = layui.laydate;
+        var upload = layui.upload;
 #foreach($column in $table.columns)
     #if (${column.pageType} == "date")
         laydate.render({
@@ -135,6 +149,13 @@
     #end
 #end
         form.on('submit(${table.entityLowerCamel}Add-filter)', function (data) {
+            #foreach($column in $table.columns)
+            #if(${column.pageType} == "textarea-wangEdit")
+                $('input[name="${column.fieldName}"]').val(editor.txt.html());
+            #end
+            #end
+            // 如果包含文件提交，就用下面这行代码代替
+            // sys_doAjaxPostWithFormFile(action, new FormData($('#${table.entityLowerCamel}AddForm')[0]));
             sys_doAjaxPostWithForm(action, data.field, function(obj) {
                 if (parent.layer == undefined) {
                     layer.msg("提交成功", {time: 1000}, function () {
@@ -150,6 +171,21 @@
             });
             return false;
         });
+        #foreach($column in $table.columns)
+            #if (${column.pageType} == "img")
+                upload.render({
+                    elem: '#${column.fieldName}'
+                    ,auto: false
+                    ,choose: function(obj) {
+                        //预读本地文件示例，不支持ie8
+                        obj.preview(function (index, file, result) {
+                            $('#previewUploadSingleImage').append('<img src="' + result + '" alt="' + file.name + '" class="layui-upload-img">')
+                        });
+                    }
+                });
+            #end
+        #end
+
     });
 
 </script>
