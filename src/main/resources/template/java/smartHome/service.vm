@@ -1,0 +1,76 @@
+package ${table.basePackage}.modules.other.service;
+
+import com.github.pagehelper.PageHelper;
+import ${table.daoPackage}.${table.daoObjName};
+import ${table.basePackage}.other.entity.${table.entityObjName};
+import ${table.basePackage}.other.entity.${table.exampleObjName};
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Date;
+
+/**
+* @author jason
+**/
+@Service
+public class ${table.entityObjName}Service {
+
+    @Resource
+    ${table.daoObjName} ${table.entityLowerCamel}Mapper;
+
+    public int create(${table.entityObjName} ${table.entityLowerCamel}) {
+        #foreach($column in $table.columns)
+            #if (${column.whoColumn} == "true")
+                #if(${column.fieldName.indexOf("Time")} != -1 && ${column.fieldName.indexOf("cre")} != -1)
+                    ${table.entityLowerCamel}.${column.setterName}(new Date());
+                #end
+            #end
+        #end
+        return ${table.entityLowerCamel}Mapper.insertSelective(${table.entityLowerCamel});
+    }
+
+    public int update(${table.entityObjName} ${table.entityLowerCamel}) {
+        #foreach($column in $table.columns)
+            #if (${column.whoColumn} == "true")
+                #if(${column.fieldName.indexOf("Time")} != -1 && ${column.fieldName.indexOf("up")} != -1)
+                    ${table.entityLowerCamel}.${column.setterName}(new Date());
+                #end
+            #end
+        #end
+        return ${table.entityLowerCamel}Mapper.updateByPrimaryKeySelective(${table.entityLowerCamel});
+    }
+
+    public int deleteById(Long id) {
+        return ${table.entityLowerCamel}Mapper.deleteByPrimaryKey(id);
+    }
+
+    @Transactional(rollbackFor = RuntimeException.class)
+    public void delete(List<Long> idList) {
+        for (Long id : idList) {
+            ${table.entityLowerCamel}Mapper.deleteByPrimaryKey(id);
+        }
+    }
+
+    public List<${table.entityObjName}> selectByPage(${table.entityObjName} ${table.entityLowerCamel}, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        ${table.exampleObjName} example = new ${table.exampleObjName}();
+        ${table.exampleObjName}.Criteria criteria = example.createCriteria();
+        // TODO 按需根据字段查询
+        #foreach($column in $table.columns)
+            #if (${column.searched} == "true")
+            if (StringUtils.isNotBlank(${table.entityLowerCamel}.${column.getterName}())) {
+                criteria.and${column.fieldNameUpperCamel}EqualTo(${table.entityLowerCamel}.${column.getterName}());
+            }
+            #end
+        #end
+        return ${table.entityLowerCamel}Mapper.selectByExample(example);
+    }
+
+    public ${table.entityObjName} findById(Long id) {
+        ${table.entityObjName} ${table.entityLowerCamel} = ${table.entityLowerCamel}Mapper.selectByPrimaryKey(id);
+        return ${table.entityLowerCamel};
+    }
+
+}
