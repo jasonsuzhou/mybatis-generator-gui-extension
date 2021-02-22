@@ -1,0 +1,73 @@
+package com.smart.home.controller.pc;
+
+import com.smart.home.dto.APIResponse;
+import com.smart.home.dto.IdListBean;
+import com.smart.home.dto.ResponsePageBean;
+import com.smart.home.modules.other.entity.${table.entityName};
+import com.smart.home.modules.other.service.${table.entityName}Service;
+import com.smart.home.util.UserUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+* @author jason
+**/
+@Api(tags = "${table.remarks}接口")
+@RestController
+@RequestMapping("/api/TODO自定义/${table.entityLowerCamel}")
+public class ${table.entityName}Controller{
+
+    @Autowired
+    private ${table.entityName}Service ${table.entityLowerCamel}Service;
+
+    @ApiOperation("创建${table.remarks}")
+    @PostMapping("/create")
+    public APIResponse create(${table.entityName} ${table.entityLowerCamel}) {
+        #foreach($column in $table.columns)
+            #if (${column.whoColumn} == "true")
+                #if(${column.fieldName.indexOf("By")} != -1 && ${column.fieldName.indexOf("cre")} != -1)
+                    ${table.entityLowerCamel}.${column.setterName}(UserUtils.getLoginUserId());
+                #end
+            #end
+        #end
+        return APIResponse.OK(${table.entityLowerCamel}Service.create(auditHistory));
+    }
+
+    @ApiOperation("更新${table.remarks}")
+    @PostMapping("/update")
+    public APIResponse update(${table.entityName} ${table.entityLowerCamel}) {
+        #foreach($column in $table.columns)
+            #if (${column.whoColumn} == "true")
+                #if(${column.fieldName.indexOf("By")} != -1 && ${column.fieldName.indexOf("cre")} != -1)
+                    ${table.entityLowerCamel}.${column.setterName}(UserUtils.getLoginUserId());
+                #end
+            #end
+        #end
+        return APIResponse.OK(${table.entityLowerCamel}Service.update(auditHistory));
+    }
+
+    @ApiOperation("删除${table.remarks}")
+    @PostMapping("/delete")
+    public APIResponse delete(@RequestBody IdListBean idListBean) {
+        ${table.entityLowerCamel}Service.delete(idListBean.getIdList());
+        return APIResponse.OK();
+    }
+
+    @ApiOperation("分页查询${table.remarks}")
+    @PostMapping("/selectByPage")
+    public APIResponse<ResponsePageBean<${table.entityName}>> selectByPage(${table.entityName} ${table.entityLowerCamel}, int pageNum, int pageSize) {
+        List<${table.entityName}> list = ${table.entityLowerCamel}Service.selectByPage(${table.entityLowerCamel}, pageNum, pageSize);
+        return APIResponse.OK(ResponsePageBean.restPage(list));
+    }
+
+    @ApiOperation("按主键ID查询${table.remarks}")
+    @GetMapping("/selectById")
+    public APIResponse<${table.entityName}> selectById(Long id) {
+        return APIResponse.OK(${table.entityLowerCamel}Service.findById(id));
+    }
+
+}
