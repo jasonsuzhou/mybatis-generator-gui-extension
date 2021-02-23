@@ -18,7 +18,7 @@ import java.util.List;
 **/
 @Api(tags = "${table.remarks}接口")
 @RestController
-@RequestMapping("/api/TODO自定义/${table.entityLowerCamel}")
+@RequestMapping("/api/pc/${table.entityLowerCamel}")
 public class ${table.entityName}Controller{
 
     @Autowired
@@ -34,7 +34,7 @@ public class ${table.entityName}Controller{
                 #end
             #end
         #end
-        return APIResponse.OK(${table.entityLowerCamel}Service.create(auditHistory));
+        return APIResponse.OK(${table.entityLowerCamel}Service.create(${table.entityLowerCamel}));
     }
 
     @ApiOperation("更新${table.remarks}")
@@ -47,7 +47,7 @@ public class ${table.entityName}Controller{
                 #end
             #end
         #end
-        return APIResponse.OK(${table.entityLowerCamel}Service.update(auditHistory));
+        return APIResponse.OK(${table.entityLowerCamel}Service.update(${table.entityLowerCamel}));
     }
 
     @ApiOperation("删除${table.remarks}")
