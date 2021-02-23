@@ -2,8 +2,8 @@ package ${table.basePackage}.modules.other.service;
 
 import com.github.pagehelper.PageHelper;
 import ${table.daoPackage}.${table.daoObjName};
-import ${table.basePackage}.other.entity.${table.entityObjName};
-import ${table.basePackage}.other.entity.${table.exampleObjName};
+import ${table.basePackage}.modules.product.entity.${table.entityObjName};
+import ${table.basePackage}.modules.product.entity.${table.exampleObjName};
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
