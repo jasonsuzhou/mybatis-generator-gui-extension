@@ -22,6 +22,8 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,13 +90,16 @@ public class ${table.entityName}Controller{
     public void export(/*form data*/${table.entityName} ${table.entityLowerCamel},
                         HttpServletRequest request, HttpServletResponse response) {
         try {
+            byte[] utf8bom={(byte)0xef,(byte)0xbb,(byte)0xbf};
+            OutputStream outputStream = response.getOutputStream();
+            outputStream.write(utf8bom);
             response.setCharacterEncoding("UTF-8");
-            response.setContentType("");
+            response.setContentType("application/vnd.ms-excel;charset=utf-8");
             String tempFileName = ${table.entityName}.class.getSimpleName()+"_"+System.currentTimeMillis()/1000+".csv";
             String fileName = WebUtils.genDownloadFileName(tempFileName, request);
             response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
             List<${table.entityName}> list = ${table.entityLowerCamel}Service.queryAll(${table.entityLowerCamel});
-            CSVWriter csvWriter = new CSVWriter(response.getWriter());
+            CSVWriter csvWriter = new CSVWriter(new PrintWriter(outputStream));
             ${table.entityName}VO ${table.entityLowerCamel}VO = null;
             for (${table.entityName} record : list) {
                 ${table.entityLowerCamel}VO = new ${table.entityName}VO(record);
